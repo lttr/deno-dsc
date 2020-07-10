@@ -13,7 +13,7 @@ export interface SymlinkConfiguration extends Configuration {
   src: string;
 }
 
-export const symlink: Resource<SymlinkConfiguration> = {
+export const Symlink: Resource<SymlinkConfiguration> = {
   name: "symlink",
   test: async function({ src, dest }, verbose) {
     const exists = await symlinkExists(src, dest);

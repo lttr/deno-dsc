@@ -5,7 +5,7 @@ export interface LoginShellConfiguration extends Configuration {
   shell: "zsh";
 }
 
-export const loginShell: Resource<LoginShellConfiguration> = {
+export const LoginShell: Resource<LoginShellConfiguration> = {
   name: "loginShell",
 
   test: async function({ shell }, verbose) {

@@ -5,7 +5,7 @@ export interface DirectoryConfiguration extends Configuration {
   path: string;
 }
 
-export const directory: Resource<DirectoryConfiguration> = {
+export const Directory: Resource<DirectoryConfiguration> = {
   name: "directory",
 
   test: async function({ ensure = "present", path }, verbose) {
