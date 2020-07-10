@@ -1,4 +1,4 @@
-import { Configuration } from "../dsc/resource.ts";
+import { Configuration } from "./resource.ts";
 import { jsonTree } from "./deps.ts";
 
 export async function runConfigurationSet(
