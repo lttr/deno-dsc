@@ -1,12 +1,13 @@
-import { Configuration } from "./resource.ts";
+import { Configuration, ConfigurationWithDeps } from "./resource.ts";
 import { jsonTree } from "./deps.ts";
+import { depGraph } from "./dep-graph/dep-graph.ts";
 
 export async function runConfigurationSet(
   configurationSet: Configuration[],
   { verbose } = {
     verbose: true
   }
-) {
+): Promise<void> {
   async function run(config: Configuration) {
     if (config.dependsOn != null) {
     }
@@ -15,13 +16,15 @@ export async function runConfigurationSet(
       await config.resource.set(config, verbose);
     }
   }
-  const root = createRootNode();
+  const root: ConfigurationWithDeps = createRootNode();
   addDefaultDependsOn(configurationSet, root);
   constructDependenciesTree(configurationSet);
-  breadthFirst<Configuration>(root, run);
+  breadthFirst<ConfigurationWithDeps>(root, run);
 }
 
-export async function printConfigurationSet(configurationSet: Configuration[]) {
+export async function printConfigurationSet(
+  configurationSet: Configuration[]
+): Promise<void> {
   const root = createRootNode();
   addDefaultDependsOn(configurationSet, root);
   constructDependenciesTree(configurationSet);
@@ -30,18 +33,26 @@ export async function printConfigurationSet(configurationSet: Configuration[]) {
   console.log(jsonTree(root, true, true));
 }
 
-async function removeBackreferences(root: Configuration) {
+export async function showDepGraph(
+  configurationSet: Configuration[]
+): Promise<void> {
+  const root = createRootNode();
+  addDefaultDependsOn(configurationSet, root);
+  await depGraph(configurationSet);
+}
+
+async function removeBackreferences(root: ConfigurationWithDeps) {
   function removeDependsOn(config: any) {
     delete config.dependsOn;
   }
-  await breadthFirst<Configuration>(root, removeDependsOn);
+  await breadthFirst<ConfigurationWithDeps>(root, removeDependsOn);
 }
 
-function createRootNode() {
+function createRootNode(): ConfigurationWithDeps {
   return {
     resource: {
       name: "root",
-      get: (c: Configuration) => "this is root",
+      get: (c: Configuration) => "START",
       set: async () => {},
       test: async () => true
     },
@@ -72,7 +83,7 @@ function constructDependenciesTree(configurationSet: Configuration[]) {
   }
 }
 
-async function breadthFirst<T extends { dependencies?: any[] }>(
+export async function breadthFirst<T extends { dependencies: any[] }>(
   node: T,
   action: (node: T) => Promise<void> | void
 ) {

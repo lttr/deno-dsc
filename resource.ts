@@ -14,3 +14,9 @@ export interface Configuration {
   ensure?: "present" | "absent";
   resource: Resource<Configuration>;
 }
+
+export interface ConfigurationWithDeps {
+  dependencies: Array<Configuration>;
+  ensure?: "present" | "absent";
+  resource: Resource<Configuration>;
+}

@@ -17,3 +17,4 @@ export const deno = Deno;
 
 // user land
 export { jsonTree } from "https://deno.land/x/json_tree/mod.ts";
+export { open } from "https://deno.land/x/opener/mod.ts";

@@ -9,7 +9,7 @@
       "type": "shell",
       "label": "deno",
       "command": "deno",
-      "args": ["run", "--unstable", "-A", "install/print.ts"],
+      "args": ["run", "--unstable", "-A", "examples.ts"],
       "presentation": {
         "clear": true
       },

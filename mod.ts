@@ -4,3 +4,4 @@ export { Symlink, SymlinkConfiguration } from "./resources/symlink.ts";
 export { Configuration } from "./resource.ts";
 export { runConfigurationSet } from "./configuration.ts";
 export { printConfigurationSet } from "./configuration.ts";
+export { showDepGraph } from "./configuration.ts";
