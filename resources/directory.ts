@@ -1,11 +1,12 @@
 import { ensureDir, exists, log, deno } from "../deps.ts";
-import { Configuration, Resource } from "../resource.ts";
+import { Configuration } from "../configuration.ts";
+import { SpecificResource } from "../resource.ts";
 
 export interface DirectoryConfiguration extends Configuration {
   path: string;
 }
 
-export const Directory: Resource<DirectoryConfiguration> = {
+export const Directory: SpecificResource<DirectoryConfiguration> = {
   name: "directory",
 
   test: async function({ ensure = "present", path }, verbose) {

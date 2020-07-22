@@ -1,11 +1,12 @@
 import { deno, log } from "../deps.ts";
-import { Configuration, Resource } from "../resource.ts";
+import { SpecificResource } from "../resource.ts";
+import { Configuration } from "../configuration.ts";
 
 export interface LoginShellConfiguration extends Configuration {
   shell: "zsh";
 }
 
-export const LoginShell: Resource<LoginShellConfiguration> = {
+export const LoginShell: SpecificResource<LoginShellConfiguration> = {
   name: "loginShell",
 
   test: async function({ shell }, verbose) {
@@ -19,7 +20,7 @@ export const LoginShell: Resource<LoginShellConfiguration> = {
     }
   },
 
-  get: (config: LoginShellConfiguration) => {
+  get: config => {
     return `login shell ${config.shell}`;
   },
 

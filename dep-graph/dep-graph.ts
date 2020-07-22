@@ -1,21 +1,23 @@
 import { digraph, fs, open, toDot } from "../deps.ts";
 import { htmlPage } from "./html-page.ts";
-import { Configuration } from "../resource.ts";
+import { Config } from "../configuration.ts";
 
-export function depGraph(config: Configuration[]): void {
+export function depGraph(config: Config[]): void {
   const G = digraph("Execution tree", { rankdir: "LR" }, g => {
     for (const node of config) {
-      g.node(node.resource.get(node));
-      const dependant = node.resource.get(node);
-      const dependency = node.dependsOn?.resource.get(node.dependsOn);
-      if (dependency) {
-        if (dependency !== "START") {
-          g.edge([dependency, dependant]);
+      if (node.resource) {
+        g.node(node.resource.get(node));
+        const dependency = node.dependsOn?.resource?.get(node.dependsOn);
+        if (dependency) {
+          if (dependency !== "START") {
+            const dependant = node.resource.get(node);
+            g.edge([dependency, dependant]);
+          }
+        } else {
+          console.error(
+            `Missing 'dependsOn' property on '${node.resource.get(node)}'`
+          );
         }
-      } else {
-        console.error(
-          `Missing 'dependsOn' property on '${node.resource.get(node)}'`
-        );
       }
     }
   });

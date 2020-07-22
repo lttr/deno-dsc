@@ -1,3 +1,4 @@
+import { Configuration } from "../configuration.ts";
 import {
   deno,
   ensureSymlink,
@@ -6,14 +7,14 @@ import {
   log,
   path
 } from "../deps.ts";
-import { Configuration, Resource } from "../resource.ts";
+import { SpecificResource } from "../resource.ts";
 
 export interface SymlinkConfiguration extends Configuration {
   dest: string;
   src: string;
 }
 
-export const Symlink: Resource<SymlinkConfiguration> = {
+export const Symlink: SpecificResource<SymlinkConfiguration> = {
   name: "symlink",
   test: async function({ src, dest }, verbose) {
     const exists = await symlinkExists(src, dest);

@@ -1,22 +1,48 @@
-import { showDepGraph } from "../configuration.ts";
-import { Configuration, Directory, Symlink } from "../mod.ts";
-import { DirectoryConfiguration } from "../resources/directory.ts";
-import { SymlinkConfiguration } from "../resources/symlink.ts";
+import {
+  showDepGraph,
+  Config,
+  Configuration,
+  registerResource,
+  Resource
+} from "../mod.ts";
 
-const optDirectory: Configuration = {
-  resource: Directory,
-  path: "/opt"
-} as DirectoryConfiguration;
+const optDirectory: Config = {
+  directory: {
+    path: "/opt"
+  }
+};
 
-export const config: Configuration[] = [
-  { resource: Directory, path: "/tmp" } as DirectoryConfiguration,
+const configuration: Config[] = [
+  {
+    directory: {
+      path: "/tmp"
+    }
+  },
   optDirectory,
   {
-    resource: Symlink,
-    dest: "/opt",
-    src: "/tmp/this-is-opt",
-    dependsOn: optDirectory
-  } as SymlinkConfiguration
+    symlink: {
+      dest: "/opt",
+      src: "/tmp/this-is-opt",
+      dependsOn: optDirectory
+    }
+  }
 ];
 
-showDepGraph(config);
+const LoginShell: Resource = {
+  name: "loginShell",
+  get: config => {
+    return config.shell;
+  },
+  test: async (config, verbose) => {
+    return true;
+  },
+  set: async (config, verbose) => {}
+};
+
+export interface LoginShellConfiguration extends Configuration {
+  shell: "zsh";
+}
+
+registerResource(LoginShell);
+
+showDepGraph(configuration);
