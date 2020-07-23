@@ -1,27 +1,37 @@
-import { Configuration, WithDependencies } from "./configuration.ts";
+import { Config, WithDependencies } from "./configuration.ts";
 import {
   createRootNode,
   constructDependenciesTree,
-  breadthFirst
+  breadthFirst,
+  unwrapConfig
 } from "./graph.ts";
 
+export interface RunOptions {
+  verbose?: boolean;
+  dryRun?: boolean;
+}
+
 export async function runConfigurationSet(
-  configurationSet: Configuration[],
-  { verbose } = {
-    verbose: true
-  }
+  configurationSet: Config[],
+  options: RunOptions
 ): Promise<void> {
-  async function run(config: Configuration) {
+  const { verbose = true, dryRun = true } = options;
+  async function run(config: Config) {
     if (config.dependsOn != null) {
     }
     const result = await config.resource?.test(config, verbose);
-    if (!result) {
-      await config.resource?.set(config, verbose);
+    if (dryRun) {
+      console.log(
+        `${result ? "Do not" : "Do"} run '${config.resource?.get(config)}'`
+      );
+    } else {
+      if (!result) {
+        await config.resource?.set(config, verbose);
+      }
     }
   }
-  const root: Configuration = createRootNode();
-  // addDefaultDependsOn(configurationSet, root);
-  constructDependenciesTree(configurationSet);
+  const root: Config = createRootNode();
+  constructDependenciesTree(unwrapConfig(configurationSet, root));
   if (root.dependencies) {
     breadthFirst<WithDependencies>(root as WithDependencies, run);
   }

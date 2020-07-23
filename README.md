@@ -19,7 +19,7 @@ Based on your configuration the library build a dependency graph and executes ev
 
 Add configuration type and implement the resource
 ```ts
-export interface LoginShellConfiguration extends Configuration {
+export interface LoginShellConfiguration extends Config {
   shell: "zsh";
 }
 

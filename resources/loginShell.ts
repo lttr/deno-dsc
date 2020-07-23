@@ -1,8 +1,8 @@
 import { deno, log } from "../deps.ts";
-import { SpecificResource } from "../resource.ts";
-import { Configuration } from "../configuration.ts";
+import { SpecificResource, registerResource } from "../resource.ts";
+import { Config } from "../configuration.ts";
 
-export interface LoginShellConfiguration extends Configuration {
+export interface LoginShellConfiguration extends Config {
   shell: "zsh";
 }
 
@@ -36,3 +36,5 @@ export const LoginShell: SpecificResource<LoginShellConfiguration> = {
     }
   }
 };
+
+registerResource(LoginShell);

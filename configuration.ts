@@ -1,17 +1,22 @@
-import { ResourceConfiguration, ResourceNames, Resource } from "./resource.ts";
+import {
+  ResourceConfigurationMap,
+  ResourceNames,
+  Resource
+} from "./resource.ts";
 
-export interface Configuration {
+interface CommonConfigurationProperties {
   dependencies?: Config[];
   dependsOn?: Config;
   ensure?: "present" | "absent";
   resource?: Resource;
 }
 
-export type ConfigurationItem = {
-  [ResourceName in ResourceNames]?: ResourceConfiguration[ResourceName];
+type ResourceSpecificConfiguration = {
+  [ResourceName in ResourceNames]?: ResourceConfigurationMap[ResourceName];
 };
 
-export type Config = Configuration & ConfigurationItem;
+export type Config = CommonConfigurationProperties &
+  ResourceSpecificConfiguration;
 
 export interface WithDependencies {
   dependencies: any[];

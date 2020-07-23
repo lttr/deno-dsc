@@ -1,4 +1,4 @@
-import { Configuration } from "../configuration.ts";
+import { Config } from "../configuration.ts";
 import {
   deno,
   ensureSymlink,
@@ -7,9 +7,9 @@ import {
   log,
   path
 } from "../deps.ts";
-import { SpecificResource } from "../resource.ts";
+import { registerResource, SpecificResource } from "../resource.ts";
 
-export interface SymlinkConfiguration extends Configuration {
+export interface SymlinkConfiguration extends Config {
   dest: string;
   src: string;
 }
@@ -54,3 +54,5 @@ export async function symlinkExists(
   }
   return false;
 }
+
+registerResource(Symlink);

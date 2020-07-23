@@ -1,17 +1,17 @@
-import { Configuration } from "./configuration.ts";
+import { Config } from "./configuration.ts";
 import { jsonTree } from "./deps.ts";
 import {
   createRootNode,
   constructDependenciesTree,
-  removeBackreferences
+  removeBackreferences,
+  unwrapConfig
 } from "./graph.ts";
 
 export async function printConfigurationSet(
-  configurationSet: Configuration[]
+  configurationSet: Config[]
 ): Promise<void> {
   const root = createRootNode();
-  // addDefaultDependsOn(configurationSet, root);
-  constructDependenciesTree(configurationSet);
+  constructDependenciesTree(unwrapConfig(configurationSet, root));
   await removeBackreferences(root);
   console.log(jsonTree(root, true, true));
 }

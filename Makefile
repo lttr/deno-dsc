@@ -1,2 +1,8 @@
-depgraph:
+example-depgraph:
 	deno run --unstable --allow-read --allow-write --allow-run examples/example-dep-graph.ts
+
+example-print:
+	deno run --unstable --allow-read --allow-write --allow-run examples/example-print.ts
+
+example-dryrun:
+	deno run --unstable --allow-read --allow-write --allow-run examples/example-dry-run.ts

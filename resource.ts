@@ -1,8 +1,9 @@
-import { Configuration } from "./configuration.ts";
-import { DirectoryConfiguration, Directory } from "./resources/directory.ts";
-import { SymlinkConfiguration, Symlink } from "./resources/symlink.ts";
+import { Config } from "./configuration.ts";
+import { DirectoryConfiguration } from "./resources/directory.ts";
+import { SymlinkConfiguration } from "./resources/symlink.ts";
+import { LoginShellConfiguration } from "./resources/loginShell.ts";
 
-export type SpecificResource<T extends Configuration> = {
+export type SpecificResource<T extends Config> = {
   name: string;
   get: (configuration: T) => string;
   set: (configuration: T, verbose: boolean) => Promise<void>;
@@ -20,20 +21,19 @@ export type Resources =
   | SpecificResource<DirectoryConfiguration>
   | SpecificResource<SymlinkConfiguration>;
 
-export interface ResourceConfiguration {
+export interface ResourceConfigurationMap {
   directory: DirectoryConfiguration;
   symlink: SymlinkConfiguration;
+  loginShell: LoginShellConfiguration;
 }
 
-export type ResourceNames = keyof ResourceConfiguration;
-export type ResourceConfigurations = ResourceConfiguration[keyof ResourceConfiguration];
+export type ResourceNames = keyof ResourceConfigurationMap;
+export type ResourceConfigurations = ResourceConfigurationMap[keyof ResourceConfigurationMap];
 
-export const resources: Resource[] = [];
-export const resourceNames: string[] = [];
+const resources: Resource[] = [];
 
 export function registerResource(resource: Resource): void {
   resources.push(resource);
-  resourceNames.push(resource.name);
 }
 
 export function lookupResource(name: string): Resources {
@@ -43,9 +43,4 @@ export function lookupResource(name: string): Resources {
   } else {
     throw new Error(`Unknown resource name ${name}`);
   }
-}
-
-export function registerBuiltinResources(): void {
-  registerResource(Directory);
-  registerResource(Symlink);
 }

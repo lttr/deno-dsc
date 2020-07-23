@@ -1,8 +1,8 @@
-import { ensureDir, exists, log, deno } from "../deps.ts";
-import { Configuration } from "../configuration.ts";
-import { SpecificResource } from "../resource.ts";
+import { Config } from "../configuration.ts";
+import { deno, ensureDir, exists, log } from "../deps.ts";
+import { registerResource, SpecificResource } from "../resource.ts";
 
-export interface DirectoryConfiguration extends Configuration {
+export interface DirectoryConfiguration extends Config {
   path: string;
 }
 
@@ -49,3 +49,5 @@ export const Directory: SpecificResource<DirectoryConfiguration> = {
     }
   }
 };
+
+registerResource(Directory);

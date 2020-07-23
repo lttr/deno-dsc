@@ -1,24 +1,16 @@
-import {
-  Config,
-  Configuration,
-  ConfigurationItem,
-  WithDependencies
-} from "./configuration.ts";
+import { Config, WithDependencies } from "./configuration.ts";
 import { depGraph } from "./dep-graph/dep-graph.ts";
-import { lookupResource, registerBuiltinResources } from "./resource.ts";
+import { lookupResource } from "./resource.ts";
 
-export async function showDepGraph(
-  configurationSet: Configuration[]
-): Promise<void> {
-  registerBuiltinResources();
+export function showDepGraph(configurationSet: Config[]): void {
   const root = createRootNode();
   const unwrappedConfiguration = unwrapConfig(configurationSet, root);
-  await depGraph(unwrappedConfiguration);
+  depGraph(unwrappedConfiguration);
 }
 
 export function unwrapConfig(
-  configurationSet: Configuration[],
-  defaultDependsOn: Configuration
+  configurationSet: Config[],
+  defaultDependsOn: Config
 ): Config[] {
   return configurationSet.map(wrappedConfiguration => {
     const { key, unwrappedConfiguration } = unwrapItem(wrappedConfiguration);
@@ -35,13 +27,13 @@ export function unwrapConfig(
   });
 }
 
-function unwrapItem(wrappedConfiguration: Configuration) {
-  const key = Object.keys(wrappedConfiguration)[0] as keyof Configuration;
+function unwrapItem(wrappedConfiguration: Config) {
+  const key = Object.keys(wrappedConfiguration)[0] as keyof Config;
   const unwrappedConfiguration = wrappedConfiguration[key] as any;
   return { key, unwrappedConfiguration };
 }
 
-export async function removeBackreferences(root: Configuration) {
+export async function removeBackreferences(root: Config) {
   function removeDependsOn(config: any) {
     delete config.dependsOn;
   }
@@ -57,7 +49,7 @@ export function createRootNode(): Config {
   return {
     resource: {
       name: "root",
-      get: (c: ConfigurationItem) => "START",
+      get: (c: Config) => "START",
       set: async () => {},
       test: async () => true
     },
@@ -65,7 +57,7 @@ export function createRootNode(): Config {
   };
 }
 
-export function constructDependenciesTree(configurationSet: Configuration[]) {
+export function constructDependenciesTree(configurationSet: Config[]) {
   for (const config of configurationSet) {
     if (config.dependsOn) {
       if (Array.isArray(config.dependsOn.dependencies)) {
