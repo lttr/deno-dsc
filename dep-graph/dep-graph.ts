@@ -1,6 +1,6 @@
-import { digraph, fs, open, toDot } from "../deps.ts";
-import { htmlPage } from "./html-page.ts";
 import { Config } from "../configuration.ts";
+import { deno, digraph, open, toDot } from "../deps.ts";
+import { htmlPage } from "./html-page.ts";
 
 export function depGraph(config: Config[]): void {
   const G = digraph("Execution tree", { rankdir: "LR" }, g => {
@@ -27,7 +27,7 @@ export function depGraph(config: Config[]): void {
   });
   const dot = toDot(G);
   const fileName = `/tmp/dsc-${new Date().getTime()}.html`;
-  fs.writeFileStrSync(fileName, htmlPage(dot));
+  deno.writeTextFileSync(fileName, htmlPage(dot));
   open(fileName);
 }
 
