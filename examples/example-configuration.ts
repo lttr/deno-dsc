@@ -14,7 +14,8 @@ type CustomResource = {
 export const configuration: (Config & CustomResource)[] = [
   {
     directory: {
-      path: "/tmp"
+      path: "/temporary",
+      ensure: "absent"
     }
   },
   optDirectory,

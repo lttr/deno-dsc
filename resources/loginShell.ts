@@ -9,19 +9,19 @@ export interface LoginShellConfiguration extends Config {
 export const LoginShell: SpecificResource<LoginShellConfiguration> = {
   name: "loginShell",
 
+  get: config => {
+    return `login shell ${config.shell}`;
+  },
+
   test: async function({ shell }, verbose) {
     if (deno.env.get("ZSH_NAME") === "zsh") {
       if (verbose) {
-        log.warning(`Login shell is already set to ${shell}`);
+        log.warning(`Login shell is already set to '${shell}'`);
       }
       return true;
     } else {
       return false;
     }
-  },
-
-  get: config => {
-    return `login shell ${config.shell}`;
   },
 
   set: async ({ ensure = "present", shell }, verbose) => {
@@ -30,9 +30,16 @@ export const LoginShell: SpecificResource<LoginShellConfiguration> = {
         cmd: ["sudo", "chsh", "-s", "/usr/bin/zsh"]
       });
       const status = await result.status();
-      if (!status.success) {
-        log.error(`Shell ${shell} was not set as a login shell.`);
+      if (verbose) {
+        log.info(`Shell '${shell}' was set as a login shell`);
       }
+      if (!status.success) {
+        log.error(`Shell '${shell}' was not set as a login shell`);
+      }
+    } else {
+      log.warning(
+        `It does not make sense to ensure '${shell}' shell is absent`
+      );
     }
   }
 };

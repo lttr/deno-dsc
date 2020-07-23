@@ -16,26 +16,49 @@ export interface SymlinkConfiguration extends Config {
 
 export const Symlink: SpecificResource<SymlinkConfiguration> = {
   name: "symlink",
-  test: async function({ src, dest }, verbose) {
-    const exists = await symlinkExists(src, dest);
-    if (exists && verbose) {
-      log.warning(`Symlink already exists: ${dest} -> ${path.resolve(src)}`);
-    }
-    return exists;
-  },
 
   get: ({ src, dest }) => {
     return `symlink from ${dest} to ${src}`;
   },
 
-  set: async ({ src, dest }, verbose) => {
-    try {
-      await ensureSymlink(src, dest);
-      if (verbose) {
-        log.info(`Symlink created: ${dest} -> ${src}`);
+  test: async function({ ensure = "present", src, dest }, verbose) {
+    const exists = await symlinkExists(src, dest);
+    if (ensure === "present") {
+      if (exists && verbose) {
+        log.warning(`Symlink '${dest} -> ${path.resolve(src)}' already exists`);
       }
-    } catch (e) {
-      throw e;
+      return exists;
+    } else {
+      if (!exists && verbose) {
+        log.warning(
+          `Symlink '${dest} -> ${path.resolve(src)}' does not exists`
+        );
+      }
+      return !exists;
+    }
+  },
+
+  set: async ({ ensure = "present", src, dest }, verbose) => {
+    if (ensure === "present") {
+      try {
+        await ensureSymlink(src, dest);
+        if (verbose) {
+          log.info(`Symlink created: ${dest} -> ${src}`);
+        }
+      } catch (e) {
+        throw e;
+      }
+    } else if (ensure === "absent") {
+      try {
+        await deno.remove(dest);
+        if (verbose) {
+          log.info(`Directory '${dest}' was removed`);
+        }
+      } catch (err) {
+        if (!(err instanceof deno.errors.NotFound)) {
+          throw err;
+        }
+      }
     }
   }
 };

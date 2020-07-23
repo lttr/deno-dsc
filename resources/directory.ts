@@ -1,5 +1,5 @@
 import { Config } from "../configuration.ts";
-import { deno, ensureDir, exists, log } from "../deps.ts";
+import { deno, ensureDir, exists as dirExists, log } from "../deps.ts";
 import { registerResource, SpecificResource } from "../resource.ts";
 
 export interface DirectoryConfiguration extends Config {
@@ -9,23 +9,23 @@ export interface DirectoryConfiguration extends Config {
 export const Directory: SpecificResource<DirectoryConfiguration> = {
   name: "directory",
 
-  test: async function({ ensure = "present", path }, verbose) {
-    const dirExists = await exists(path);
-    if (ensure === "present") {
-      if (dirExists && verbose) {
-        log.warning(`Directory already exists on path ${path}`);
-      }
-      return dirExists;
-    } else {
-      if (dirExists && verbose) {
-        log.warning(`Directory does not exists on path ${path}`);
-      }
-      return !dirExists;
-    }
+  get: ({ ensure = "present", path }) => {
+    return `directory on path ${path}${ensure === "absent" ? " ABSENT" : ""}`;
   },
 
-  get: (config: DirectoryConfiguration) => {
-    return `directory on path ${config.path}`;
+  test: async function({ ensure = "present", path }, verbose) {
+    const exists = await dirExists(path);
+    if (ensure === "present") {
+      if (exists && verbose) {
+        log.warning(`Directory '${path}' already exists`);
+      }
+      return exists;
+    } else {
+      if (!exists && verbose) {
+        log.warning(`Directory '${path}' does not exists`);
+      }
+      return !exists;
+    }
   },
 
   set: async ({ ensure = "present", path }, verbose) => {
@@ -33,14 +33,17 @@ export const Directory: SpecificResource<DirectoryConfiguration> = {
       try {
         await ensureDir(path);
         if (verbose) {
-          log.info(`Directory created on path ${path}`);
+          log.info(`Directory '${path}' created`);
         }
       } catch (e) {
         throw e;
       }
-    } else {
+    } else if (ensure === "absent") {
       try {
         await deno.remove(path, { recursive: true });
+        if (verbose) {
+          log.info(`Directory '${path}' was removed`);
+        }
       } catch (err) {
         if (!(err instanceof deno.errors.NotFound)) {
           throw err;
