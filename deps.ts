@@ -10,7 +10,9 @@ export { path };
 export { ensureSymlink } from "https://deno.land/std/fs/ensure_symlink.ts";
 export { getFileInfoType } from "https://deno.land/std/fs/_util.ts";
 export { ensureDir } from "https://deno.land/std/fs/ensure_dir.ts";
-export { exists } from "https://deno.land/std/fs/exists.ts";
+export { exists as dirExists } from "https://deno.land/std/fs/exists.ts";
+
+export { assert } from "https://deno.land/std/testing/asserts.ts";
 
 // buildin
 export const deno = Deno;

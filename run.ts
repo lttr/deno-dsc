@@ -13,9 +13,9 @@ export interface RunOptions {
 
 export async function runConfigurationSet(
   configurationSet: Config[],
-  options: RunOptions
+  options: RunOptions = {}
 ): Promise<void> {
-  const { verbose = true, dryRun = true } = options;
+  const { verbose = false, dryRun = false } = options;
   async function run(config: Config) {
     if (config.dependsOn != null) {
     }
@@ -33,6 +33,6 @@ export async function runConfigurationSet(
   const root: Config = createRootNode();
   constructDependenciesTree(unwrapConfig(configurationSet, root));
   if (root.dependencies) {
-    breadthFirst<WithDependencies>(root as WithDependencies, run);
+    await breadthFirst<WithDependencies>(root as WithDependencies, run);
   }
 }

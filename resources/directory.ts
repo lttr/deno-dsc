@@ -1,5 +1,5 @@
 import { Config } from "../configuration.ts";
-import { deno, ensureDir, exists as dirExists, log } from "../deps.ts";
+import { deno, ensureDir, dirExists, log } from "../deps.ts";
 import { registerResource, SpecificResource } from "../resource.ts";
 
 export interface DirectoryConfiguration extends Config {
