@@ -11,12 +11,11 @@ interface CommonConfigurationProperties {
   resource?: Resource;
 }
 
-type ResourceSpecificConfiguration = {
+type ResourceSpecificConfig = {
   [ResourceName in ResourceNames]?: ResourceConfigurationMap[ResourceName];
 };
 
-export type Config = CommonConfigurationProperties &
-  ResourceSpecificConfiguration;
+export type Config = CommonConfigurationProperties & ResourceSpecificConfig;
 
 export interface WithDependencies {
   dependencies: any[];

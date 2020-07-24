@@ -7,18 +7,18 @@ import {
   log,
   path
 } from "../deps.ts";
-import { registerResource, SpecificResource } from "../resource.ts";
+import { SpecificResource } from "../resource.ts";
 
-export interface SymlinkConfiguration extends Config {
+export interface SymlinkConfig extends Config {
   dest: string;
   src: string;
 }
 
-export const Symlink: SpecificResource<SymlinkConfiguration> = {
+export const Symlink: SpecificResource<SymlinkConfig> = {
   name: "symlink",
 
   get: ({ src, dest }) => {
-    return `symlink from ${dest} to ${src}`;
+    return `SYMLINK from ${dest} to ${src}`;
   },
 
   test: async function({ ensure = "present", src, dest }, verbose) {
@@ -77,5 +77,3 @@ export async function symlinkExists(
   }
   return false;
 }
-
-registerResource(Symlink);

@@ -1,20 +1,20 @@
-import { deno, log } from "../deps.ts";
-import { SpecificResource, registerResource } from "../resource.ts";
 import { Config } from "../configuration.ts";
+import { deno, log } from "../deps.ts";
+import { SpecificResource } from "../resource.ts";
 
-export interface LoginShellConfiguration extends Config {
-  shell: "zsh";
+export interface LoginShellConfig extends Config {
+  shell: string;
 }
 
-export const LoginShell: SpecificResource<LoginShellConfiguration> = {
+export const LoginShell: SpecificResource<LoginShellConfig> = {
   name: "loginShell",
 
   get: config => {
-    return `login shell ${config.shell}`;
+    return `LOGIN SHELL ${config.shell}`;
   },
 
   test: async function({ shell }, verbose) {
-    if (deno.env.get("ZSH_NAME") === "zsh") {
+    if (deno.env.get("ZSH_NAME") || deno.env.get("ZSH_DIR")) {
       if (verbose) {
         log.warning(`Login shell is already set to '${shell}'`);
       }
@@ -26,14 +26,15 @@ export const LoginShell: SpecificResource<LoginShellConfiguration> = {
 
   set: async ({ ensure = "present", shell }, verbose) => {
     if (ensure === "present") {
-      const result = deno.run({
+      const process = deno.run({
         cmd: ["sudo", "chsh", "-s", "/usr/bin/zsh"]
       });
-      const status = await result.status();
-      if (verbose) {
-        log.info(`Shell '${shell}' was set as a login shell`);
-      }
-      if (!status.success) {
+      const { success } = await process.status();
+      if (success) {
+        if (verbose) {
+          log.info(`Shell '${shell}' was set as a login shell`);
+        }
+      } else {
         log.error(`Shell '${shell}' was not set as a login shell`);
       }
     } else {
@@ -43,5 +44,3 @@ export const LoginShell: SpecificResource<LoginShellConfiguration> = {
     }
   }
 };
-
-registerResource(LoginShell);

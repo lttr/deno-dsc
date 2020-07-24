@@ -1,7 +1,15 @@
 import { Config } from "./configuration.ts";
-import { DirectoryConfiguration } from "./resources/directory.ts";
-import { SymlinkConfiguration } from "./resources/symlink.ts";
-import { LoginShellConfiguration } from "./resources/loginShell.ts";
+import { Directory, DirectoryConfig } from "./resources/directory.ts";
+import {
+  GnomeSettings,
+  GnomeSettingsConfig
+} from "./resources/gnomeSettings.ts";
+import {
+  GnomeShellExtensionInstallerConfig,
+  GnomeShellExtensionInstaller
+} from "./resources/gnomeShellExtensionInstaller.ts";
+import { LoginShell, LoginShellConfig } from "./resources/loginShell.ts";
+import { Symlink, SymlinkConfig } from "./resources/symlink.ts";
 
 export type SpecificResource<T extends Config> = {
   name: string;
@@ -18,13 +26,18 @@ export interface Resource {
 }
 
 export type Resources =
-  | SpecificResource<DirectoryConfiguration>
-  | SpecificResource<SymlinkConfiguration>;
+  | SpecificResource<DirectoryConfig>
+  | SpecificResource<GnomeSettingsConfig>
+  | SpecificResource<GnomeShellExtensionInstallerConfig>
+  | SpecificResource<LoginShellConfig>
+  | SpecificResource<SymlinkConfig>;
 
 export interface ResourceConfigurationMap {
-  directory: DirectoryConfiguration;
-  symlink: SymlinkConfiguration;
-  loginShell: LoginShellConfiguration;
+  directory: DirectoryConfig;
+  gnomeSettings: GnomeSettingsConfig;
+  gnomeShellExtensionInstaller: GnomeShellExtensionInstallerConfig;
+  loginShell: LoginShellConfig;
+  symlink: SymlinkConfig;
 }
 
 export type ResourceNames = keyof ResourceConfigurationMap;
@@ -35,6 +48,12 @@ const resources: Resource[] = [];
 export function registerResource(resource: Resource): void {
   resources.push(resource);
 }
+
+registerResource(Directory);
+registerResource(GnomeSettings);
+registerResource(GnomeShellExtensionInstaller);
+registerResource(LoginShell);
+registerResource(Symlink);
 
 export function lookupResource(name: string): Resources {
   const found = resources.find(resource => resource.name === name);

@@ -14,6 +14,6 @@ export const CustomResource: Resource = {
   set: async (config, verbose) => {}
 };
 
-export interface CustomResourceConfiguration extends Config {
+export interface CustomResourceConfig extends Config {
   foo: string;
 }

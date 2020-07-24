@@ -4,7 +4,7 @@ Simple desired state configuration library for `deno`. Inspired by [Powershell D
 
 ## What
 
-When you need to get your system into desired state. Quickly, Reliably, repeatedly. You can use Ansible, Puppet, Powershell or something else. But this is simple and you can use JavaScript/TypeScript. `Deno` is the only dependency (and runtime at the same time).
+When you need to get your system into desired state. Quickly, reliably, repeatedly. You can use Ansible, Puppet, Powershell or something else. But this is simple and you can use JavaScript/TypeScript. `Deno` is the only runtime dependency.
 
 ## Why
 
@@ -19,11 +19,11 @@ Based on your configuration the library build a dependency graph and executes ev
 
 Add configuration type and implement the resource
 ```ts
-export interface LoginShellConfiguration extends Config {
+export interface LoginShellConfig extends Config {
   shell: "zsh";
 }
 
-export const LoginShell: Resource<LoginShellConfiguration> = {
+export const LoginShell: Resource<LoginShellConfig> = {
   name: "loginShell",
   get: (config) => {
     //...
@@ -40,7 +40,7 @@ export const LoginShell: Resource<LoginShellConfiguration> = {
 Add to list of types of resources
 
 ```ts
-type MyResources = Resources | Resource<LoginShellConfiguration>;
+type MyResources = Resources | Resource<LoginShellConfig>;
 ```
 
 Registr the new resource

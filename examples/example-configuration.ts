@@ -1,5 +1,5 @@
 import { Config } from "../mod.ts";
-import { CustomResourceConfiguration } from "./example-custom-resource.ts";
+import { CustomResourceConfig } from "./example-custom-resource.ts";
 
 const optDirectory: Config = {
   directory: {
@@ -8,7 +8,7 @@ const optDirectory: Config = {
 };
 
 type CustomResource = {
-  customResource?: CustomResourceConfiguration;
+  customResource?: CustomResourceConfig;
 };
 
 export const configuration: (Config & CustomResource)[] = [

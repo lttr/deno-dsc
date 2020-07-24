@@ -1,16 +1,16 @@
 import { Config } from "../configuration.ts";
 import { deno, ensureDir, dirExists, log } from "../deps.ts";
-import { registerResource, SpecificResource } from "../resource.ts";
+import { SpecificResource } from "../resource.ts";
 
-export interface DirectoryConfiguration extends Config {
+export interface DirectoryConfig extends Config {
   path: string;
 }
 
-export const Directory: SpecificResource<DirectoryConfiguration> = {
+export const Directory: SpecificResource<DirectoryConfig> = {
   name: "directory",
 
   get: ({ ensure = "present", path }) => {
-    return `directory on path ${path}${ensure === "absent" ? " ABSENT" : ""}`;
+    return `DIRECTORY on path ${path}${ensure === "absent" ? " ABSENT" : ""}`;
   },
 
   test: async function({ ensure = "present", path }, verbose) {
@@ -52,5 +52,3 @@ export const Directory: SpecificResource<DirectoryConfiguration> = {
     }
   }
 };
-
-registerResource(Directory);
