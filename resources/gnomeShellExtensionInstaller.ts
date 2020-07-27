@@ -22,7 +22,9 @@ export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionI
   test: async function({ location }, verbose) {
     if (await isExecutable(path.join(location, EXE_NAME))) {
       if (verbose) {
-        log.warning(`'${EXE_NAME}' is already installed on this machine`);
+        log.warning(
+          `Program '${EXE_NAME}' is already installed on this machine`
+        );
       }
       return true;
     } else {
@@ -40,11 +42,11 @@ export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionI
           mode: 0o744
         });
         if (verbose) {
-          log.info(`${EXE_NAME} installed on location '${location}'`);
+          log.info(`Program ${EXE_NAME} installed on location '${location}'`);
         }
       } catch (err) {
         log.error(err);
-        log.error(`${EXE_NAME} failed to install`);
+        log.error(`Program ${EXE_NAME} failed to install`);
       }
     } else {
       log.warning(`Removing is not implemented`);

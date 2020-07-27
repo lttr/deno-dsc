@@ -8,6 +8,10 @@ import {
   GnomeShellExtensionInstallerConfig,
   GnomeShellExtensionInstaller
 } from "./resources/gnomeShellExtensionInstaller.ts";
+import {
+  GnomeShellExtensionConfig,
+  GnomeShellExtension
+} from "./resources/gnomeShellExtension.ts";
 import { LoginShell, LoginShellConfig } from "./resources/loginShell.ts";
 import { Symlink, SymlinkConfig } from "./resources/symlink.ts";
 
@@ -28,6 +32,7 @@ export interface Resource {
 export type Resources =
   | SpecificResource<DirectoryConfig>
   | SpecificResource<GnomeSettingsConfig>
+  | SpecificResource<GnomeShellExtensionConfig>
   | SpecificResource<GnomeShellExtensionInstallerConfig>
   | SpecificResource<LoginShellConfig>
   | SpecificResource<SymlinkConfig>;
@@ -35,6 +40,7 @@ export type Resources =
 export interface ResourceConfigurationMap {
   directory: DirectoryConfig;
   gnomeSettings: GnomeSettingsConfig;
+  gnomeShellExtension: GnomeShellExtensionConfig;
   gnomeShellExtensionInstaller: GnomeShellExtensionInstallerConfig;
   loginShell: LoginShellConfig;
   symlink: SymlinkConfig;
@@ -51,6 +57,7 @@ export function registerResource(resource: Resource): void {
 
 registerResource(Directory);
 registerResource(GnomeSettings);
+registerResource(GnomeShellExtension);
 registerResource(GnomeShellExtensionInstaller);
 registerResource(LoginShell);
 registerResource(Symlink);
