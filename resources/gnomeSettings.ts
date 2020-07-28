@@ -26,8 +26,11 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
     let normalizedValue = currentValue.replace(/^'/, "").replace(/'$/, "");
     if (typeof value === "number") {
       try {
-        const normalizedNumber = parseFloat(normalizedValue).toFixed(1);
-        if ("NaN" !== normalizedNumber) {
+        const parsedNumber = parseFloat(normalizedValue);
+        const normalizedNumber = parsedNumber.toFixed(1);
+        if (Number.isInteger(parsedNumber)) {
+          normalizedValue = parsedNumber.toString();
+        } else if ("NaN" !== normalizedNumber) {
           normalizedValue = normalizedNumber;
         }
       } catch {}
