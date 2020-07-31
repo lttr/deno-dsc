@@ -6,7 +6,11 @@ export function depGraph(config: Config[]): void {
   const G = digraph("Execution tree", { rankdir: "LR" }, g => {
     for (const node of config) {
       if (node.resource) {
-        g.node(node.resource.get(node), {
+        let description = node.resource.get(node);
+        if (description.length > 200) {
+          description = `${description.slice(0, 200)}...`;
+        }
+        g.node(description, {
           fontname: "Arial",
           fontsize: "12",
           color: isAbsent(node) ? "brown" : "darkgreen"
@@ -14,13 +18,11 @@ export function depGraph(config: Config[]): void {
         const dependency = node.dependsOn?.resource?.get(node.dependsOn);
         if (dependency) {
           if (dependency !== "START") {
-            const dependant = node.resource.get(node);
+            const dependant = description;
             g.edge([dependency, dependant]);
           }
         } else {
-          console.error(
-            `Missing 'dependsOn' property on '${node.resource.get(node)}'`
-          );
+          console.error(`Missing 'dependsOn' property on '${description}'`);
         }
       }
     }
