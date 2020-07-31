@@ -3,6 +3,16 @@ import * as fs from "https://deno.land/std/fs/mod.ts";
 import * as log from "https://deno.land/std/log/mod.ts";
 import * as path from "https://deno.land/std/path/mod.ts";
 
+await log.setup({
+  handlers: {
+    console: new log.handlers.ConsoleHandler("DEBUG"),
+    file: new log.handlers.FileHandler("DEBUG", {
+      filename: `/tmp/deno-dsc-${new Date().getTime()}.log`,
+      formatter: "{levelName} {msg}"
+    })
+  }
+});
+
 export { fs };
 export { log };
 export { path };
