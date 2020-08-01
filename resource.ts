@@ -1,17 +1,21 @@
 import { Config } from "./configuration.ts";
+import {
+  AppForMimeType,
+  AppForMimeTypeConfig
+} from "./resources/appForMimeType.ts";
 import { Directory, DirectoryConfig } from "./resources/directory.ts";
 import {
   GnomeSettings,
   GnomeSettingsConfig
 } from "./resources/gnomeSettings.ts";
 import {
-  GnomeShellExtensionInstallerConfig,
-  GnomeShellExtensionInstaller
-} from "./resources/gnomeShellExtensionInstaller.ts";
-import {
-  GnomeShellExtensionConfig,
-  GnomeShellExtension
+  GnomeShellExtension,
+  GnomeShellExtensionConfig
 } from "./resources/gnomeShellExtension.ts";
+import {
+  GnomeShellExtensionInstaller,
+  GnomeShellExtensionInstallerConfig
+} from "./resources/gnomeShellExtensionInstaller.ts";
 import { LoginShell, LoginShellConfig } from "./resources/loginShell.ts";
 import { Symlink, SymlinkConfig } from "./resources/symlink.ts";
 
@@ -30,6 +34,7 @@ export interface Resource {
 }
 
 export type Resources =
+  | SpecificResource<AppForMimeTypeConfig>
   | SpecificResource<DirectoryConfig>
   | SpecificResource<GnomeSettingsConfig>
   | SpecificResource<GnomeShellExtensionConfig>
@@ -38,6 +43,7 @@ export type Resources =
   | SpecificResource<SymlinkConfig>;
 
 export interface ResourceConfigurationMap {
+  appForMimeType: AppForMimeTypeConfig;
   directory: DirectoryConfig;
   gnomeSettings: GnomeSettingsConfig;
   gnomeShellExtension: GnomeShellExtensionConfig;
@@ -55,6 +61,7 @@ export function registerResource(resource: Resource): void {
   resources.push(resource);
 }
 
+registerResource(AppForMimeType);
 registerResource(Directory);
 registerResource(GnomeSettings);
 registerResource(GnomeShellExtension);
