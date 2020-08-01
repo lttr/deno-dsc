@@ -16,6 +16,7 @@ import {
   GnomeShellExtensionInstaller,
   GnomeShellExtensionInstallerConfig
 } from "./resources/gnomeShellExtensionInstaller.ts";
+import { InlineScript, InlineScriptConfig } from "./resources/inlineScript.ts";
 import { LoginShell, LoginShellConfig } from "./resources/loginShell.ts";
 import { Symlink, SymlinkConfig } from "./resources/symlink.ts";
 
@@ -39,6 +40,7 @@ export type Resources =
   | SpecificResource<GnomeSettingsConfig>
   | SpecificResource<GnomeShellExtensionConfig>
   | SpecificResource<GnomeShellExtensionInstallerConfig>
+  | SpecificResource<InlineScriptConfig>
   | SpecificResource<LoginShellConfig>
   | SpecificResource<SymlinkConfig>;
 
@@ -48,6 +50,7 @@ export interface ResourceConfigurationMap {
   gnomeSettings: GnomeSettingsConfig;
   gnomeShellExtension: GnomeShellExtensionConfig;
   gnomeShellExtensionInstaller: GnomeShellExtensionInstallerConfig;
+  inlineScript: InlineScriptConfig;
   loginShell: LoginShellConfig;
   symlink: SymlinkConfig;
 }
@@ -66,6 +69,7 @@ registerResource(Directory);
 registerResource(GnomeSettings);
 registerResource(GnomeShellExtension);
 registerResource(GnomeShellExtensionInstaller);
+registerResource(InlineScript);
 registerResource(LoginShell);
 registerResource(Symlink);
 
