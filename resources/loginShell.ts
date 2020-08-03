@@ -1,6 +1,7 @@
 import { Config } from "../configuration.ts";
 import { deno, log } from "../deps.ts";
 import { SpecificResource } from "../resource.ts";
+import { command } from "../helpers/command.ts";
 
 export interface LoginShellConfig extends Config {
   shell: string;
@@ -26,10 +27,7 @@ export const LoginShell: SpecificResource<LoginShellConfig> = {
 
   set: async ({ ensure = "present", shell }, verbose) => {
     if (ensure === "present") {
-      const process = deno.run({
-        cmd: ["sudo", "chsh", "-s", "/usr/bin/zsh"]
-      });
-      const { success } = await process.status();
+      const { success } = await command(["sudo", "chsh", "-s", "/usr/bin/zsh"]);
       if (success) {
         if (verbose) {
           log.info(`Shell '${shell}' was set as a login shell`);

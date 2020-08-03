@@ -21,13 +21,13 @@ export const AppForMimeType: SpecificResource<AppForMimeTypeConfig> = {
       log.error(`'xdg-mime' is probably not an executable on this system`);
       Deno.exit(1);
     }
-    const currentValue = await command([
+    const { output } = await command([
       "xdg-mime",
       "query",
       "default",
       mimeType
     ]);
-    if (currentValue === app) {
+    if (output === app) {
       if (verbose) {
         log.warning(`Mime type '${mimeType}' is already handled by '${app}'`);
       }
@@ -39,11 +39,7 @@ export const AppForMimeType: SpecificResource<AppForMimeTypeConfig> = {
 
   set: async ({ ensure = "present", app, mimeType }, verbose) => {
     if (ensure === "present") {
-      const process = deno.run({
-        cmd: ["xdg-mime", "default", app, mimeType],
-        stdout: "piped"
-      });
-      const { success } = await process.status();
+      const { success } = await command(["xdg-mime", "default", app, mimeType]);
       if (success) {
         if (verbose) {
           log.info(`Mime type '${mimeType}' was set to be handled by '${app}'`);

@@ -1,6 +1,7 @@
 import { Config } from "../configuration.ts";
 import { deno, log } from "../deps.ts";
 import { SpecificResource } from "../resource.ts";
+import { command } from "../helpers/command.ts";
 
 export interface InlineScriptConfig extends Config {
   name: string;
@@ -16,10 +17,7 @@ export const InlineScript: SpecificResource<InlineScriptConfig> = {
   },
 
   test: async function({ name, testScript }, verbose) {
-    const process = deno.run({
-      cmd: ["sh", "-c", testScript]
-    });
-    const { success } = await process.status();
+    const { success } = await command(["sh", "-c", testScript]);
     if (success) {
       if (verbose) {
         log.warning(`Inline script '${name}' has been already applied`);
@@ -32,10 +30,7 @@ export const InlineScript: SpecificResource<InlineScriptConfig> = {
 
   set: async ({ ensure = "present", name, setScript }, verbose) => {
     if (ensure === "present") {
-      const process = deno.run({
-        cmd: ["sh", "-c", setScript]
-      });
-      const { success } = await process.status();
+      const { success } = await command(["sh", "-c", setScript]);
       if (success) {
         if (verbose) {
           log.info(`Inline script '${name}' was applied`);

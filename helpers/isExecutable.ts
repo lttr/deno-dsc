@@ -3,8 +3,8 @@ import { command } from "./command.ts";
 
 export async function isExecutable(name: string): Promise<boolean> {
   try {
-    const path = await command(["which", name]);
-    if (await isExecutableFile(path)) {
+    const { output } = await command(["which", name]);
+    if (await isExecutableFile(output)) {
       return true;
     } else {
       return false;

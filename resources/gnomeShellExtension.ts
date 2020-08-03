@@ -26,13 +26,13 @@ export const GnomeShellExtension: SpecificResource<GnomeShellExtensionConfig> = 
       );
       Deno.exit(1);
     }
-    const enabledExtensions = await command([
+    const { output } = await command([
       "gsettings",
       "get",
       "org.gnome.shell",
       "enabled-extensions"
     ]);
-    if (enabledExtensions.includes(fullName)) {
+    if (output.includes(fullName)) {
       if (verbose) {
         log.warning(`Gnome extension '${fullName}' is already enabled`);
       }

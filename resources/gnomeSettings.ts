@@ -22,8 +22,8 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
       log.error(`'gsettings' is probably not an executable on this system`);
       Deno.exit(1);
     }
-    const currentValue = await command(["gsettings", "get", schema, key]);
-    let normalizedValue = currentValue.replace(/^'/, "").replace(/'$/, "");
+    const { output } = await command(["gsettings", "get", schema, key]);
+    let normalizedValue = output.replace(/^'/, "").replace(/'$/, "");
     if (typeof value === "number") {
       try {
         const parsedNumber = parseFloat(normalizedValue);
@@ -49,11 +49,13 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
 
   set: async ({ ensure = "present", schema, key, value }, verbose) => {
     if (ensure === "present") {
-      const process = deno.run({
-        cmd: ["gsettings", "set", schema, key, value.toString()],
-        stdout: "piped"
-      });
-      const { success } = await process.status();
+      const { success } = await command([
+        "gsettings",
+        "set",
+        schema,
+        key,
+        value.toString()
+      ]);
       if (success) {
         if (verbose) {
           log.info(`Gnome settings '${schema} ${key}' was set to '${value}'`);
