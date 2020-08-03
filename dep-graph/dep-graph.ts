@@ -7,6 +7,8 @@ export function depGraph(config: Config[]): void {
     for (const node of config) {
       if (node.resource) {
         let description = node.resource.get(node);
+        // HACK: replace colon in description (the rest of the string was stripped otherwise)
+        description = description.replace(":", "<colon>");
         if (description.length > 200) {
           description = `${description.slice(0, 200)}...`;
         }
