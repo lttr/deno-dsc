@@ -19,6 +19,8 @@ import {
 import { InlineScript, InlineScriptConfig } from "./resources/inlineScript.ts";
 import { LoginShell, LoginShellConfig } from "./resources/loginShell.ts";
 import { Symlink, SymlinkConfig } from "./resources/symlink.ts";
+import { Webi, WebiConfig } from "./resources/webi.ts";
+import { WebInstall, WebInstallConfig } from "./resources/webInstall.ts";
 
 export type SpecificResource<T extends Config> = {
   name: string;
@@ -34,6 +36,24 @@ export interface Resource {
   test: (configuration: any, verbose: boolean) => Promise<boolean>;
 }
 
+export type ResourceNames = keyof ResourceConfigurationMap;
+export type ResourceConfigurations = ResourceConfigurationMap[keyof ResourceConfigurationMap];
+
+const resources: Resource[] = [];
+
+export function registerResource(resource: Resource): void {
+  resources.push(resource);
+}
+
+export function lookupResource(name: string): Resources {
+  const found = resources.find(resource => resource.name === name);
+  if (found) {
+    return found;
+  } else {
+    throw new Error(`Unknown resource name ${name}`);
+  }
+}
+
 export type Resources =
   | SpecificResource<AppForMimeTypeConfig>
   | SpecificResource<DirectoryConfig>
@@ -42,7 +62,9 @@ export type Resources =
   | SpecificResource<GnomeShellExtensionInstallerConfig>
   | SpecificResource<InlineScriptConfig>
   | SpecificResource<LoginShellConfig>
-  | SpecificResource<SymlinkConfig>;
+  | SpecificResource<SymlinkConfig>
+  | SpecificResource<WebiConfig>
+  | SpecificResource<WebInstallConfig>;
 
 export interface ResourceConfigurationMap {
   appForMimeType: AppForMimeTypeConfig;
@@ -53,15 +75,8 @@ export interface ResourceConfigurationMap {
   inlineScript: InlineScriptConfig;
   loginShell: LoginShellConfig;
   symlink: SymlinkConfig;
-}
-
-export type ResourceNames = keyof ResourceConfigurationMap;
-export type ResourceConfigurations = ResourceConfigurationMap[keyof ResourceConfigurationMap];
-
-const resources: Resource[] = [];
-
-export function registerResource(resource: Resource): void {
-  resources.push(resource);
+  webi: WebiConfig;
+  webInstall: WebInstallConfig;
 }
 
 registerResource(AppForMimeType);
@@ -72,12 +87,5 @@ registerResource(GnomeShellExtensionInstaller);
 registerResource(InlineScript);
 registerResource(LoginShell);
 registerResource(Symlink);
-
-export function lookupResource(name: string): Resources {
-  const found = resources.find(resource => resource.name === name);
-  if (found) {
-    return found;
-  } else {
-    throw new Error(`Unknown resource name ${name}`);
-  }
-}
+registerResource(Webi);
+registerResource(WebInstall);
