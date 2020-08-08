@@ -1,6 +1,6 @@
 import { Config } from "../configuration.ts";
 import { download, ensureDir, log, path } from "../deps.ts";
-import { isExecutable } from "../helpers/isExecutable.ts";
+import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { SpecificResource } from "../resource.ts";
 
 export interface GnomeShellExtensionInstallerConfig extends Config {
@@ -20,7 +20,7 @@ export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionI
   },
 
   test: async function({ location }, verbose) {
-    if (await isExecutable(path.join(location, EXE_NAME))) {
+    if (await isExecutableCommand(path.join(location, EXE_NAME))) {
       if (verbose) {
         log.warning(
           `Program '${EXE_NAME}' is already installed on this machine`

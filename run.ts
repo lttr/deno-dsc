@@ -1,8 +1,9 @@
 import { Config, WithDependencies } from "./configuration.ts";
+import { log } from "./deps.ts";
 import {
-  createRootNode,
-  constructDependenciesTree,
   breadthFirst,
+  constructDependenciesTree,
+  createRootNode,
   unwrapConfig
 } from "./graph.ts";
 
@@ -16,17 +17,22 @@ export async function runConfigurationSet(
   options: RunOptions = {}
 ): Promise<void> {
   const { verbose = false, dryRun = false } = options;
+  const givenConfigsCount = configurationSet.length;
+  let testsCounter = 0;
+  let setsCounter = 0;
   async function run(config: Config) {
     if (config.dependsOn != null) {
     }
     const result = await config.resource?.test(config, verbose);
+    testsCounter += 1;
     if (dryRun) {
-      console.log(
+      log.info(
         `${result ? "Do not" : "Do"} run '${config.resource?.get(config)}'`
       );
     } else {
       if (!result) {
         await config.resource?.set(config, verbose);
+        setsCounter += 1;
       }
     }
   }
@@ -35,4 +41,7 @@ export async function runConfigurationSet(
   if (root.dependencies) {
     await breadthFirst<WithDependencies>(root as WithDependencies, run);
   }
+  log.info(
+    `Given ${givenConfigsCount} configs. Ran ${testsCounter} tests and ${setsCounter} sets.`
+  );
 }

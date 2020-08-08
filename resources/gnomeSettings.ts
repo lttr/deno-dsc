@@ -1,7 +1,7 @@
 import { Config } from "../configuration.ts";
 import { deno, log } from "../deps.ts";
 import { SpecificResource } from "../resource.ts";
-import { isExecutable } from "../helpers/isExecutable.ts";
+import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { command } from "../helpers/command.ts";
 
 export interface GnomeSettingsConfig extends Config {
@@ -18,9 +18,9 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
   },
 
   test: async function({ schema, key, value }, verbose) {
-    if (!(await isExecutable("gsettings"))) {
+    if (!(await isExecutableCommand("gsettings"))) {
       log.error(`'gsettings' is probably not an executable on this system`);
-      Deno.exit(1);
+      deno.exit(1);
     }
     const { output } = await command(["gsettings", "get", schema, key]);
     let normalizedValue = output.replace(/^'/, "").replace(/'$/, "");

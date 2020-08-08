@@ -1,7 +1,7 @@
 import { Config } from "../configuration.ts";
-import { log } from "../deps.ts";
+import { log, deno } from "../deps.ts";
 import { command } from "../helpers/command.ts";
-import { isExecutable } from "../helpers/isExecutable.ts";
+import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { SpecificResource } from "../resource.ts";
 
 export interface GnomeShellExtensionConfig extends Config {
@@ -20,11 +20,11 @@ export const GnomeShellExtension: SpecificResource<GnomeShellExtensionConfig> = 
    * Checks if extension is enabled in gsettings
    */
   test: async function({ fullName }, verbose) {
-    if (!(await isExecutable("gsettings"))) {
+    if (!(await isExecutableCommand("gsettings"))) {
       log.error(
         `'gsettings' is needed and is probably not an executable on this system`
       );
-      Deno.exit(1);
+      deno.exit(1);
     }
     const { output } = await command([
       "gsettings",
@@ -44,11 +44,11 @@ export const GnomeShellExtension: SpecificResource<GnomeShellExtensionConfig> = 
 
   set: async ({ ensure = "present", id, fullName }, verbose) => {
     const extensionsInstaller = "gnome-shell-extension-installer";
-    if (!(await isExecutable(extensionsInstaller))) {
+    if (!(await isExecutableCommand(extensionsInstaller))) {
       log.error(
         `'${extensionsInstaller}' is needed and is probably not an executable on this system`
       );
-      Deno.exit(1);
+      deno.exit(1);
     }
     if (ensure === "present") {
       await command([extensionsInstaller, id.toString(), "--yes"]);
