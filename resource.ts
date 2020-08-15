@@ -3,6 +3,11 @@ import {
   AppForMimeType,
   AppForMimeTypeConfig
 } from "./resources/appForMimeType.ts";
+import { BrewConfig, Brew } from "./resources/brew.ts";
+import {
+  DebianPackage,
+  DebianPackageConfig
+} from "./resources/debianPackage.ts";
 import { Directory, DirectoryConfig } from "./resources/directory.ts";
 import {
   GnomeSettings,
@@ -19,7 +24,7 @@ import {
 import { InlineScript, InlineScriptConfig } from "./resources/inlineScript.ts";
 import { LoginShell, LoginShellConfig } from "./resources/loginShell.ts";
 import { Symlink, SymlinkConfig } from "./resources/symlink.ts";
-import { Webi, WebiConfig } from "./resources/webi.ts";
+import { UrlScript, UrlScriptConfig } from "./resources/urlScript.ts";
 import { WebInstall, WebInstallConfig } from "./resources/webInstall.ts";
 
 export type SpecificResource<T extends Config> = {
@@ -56,6 +61,8 @@ export function lookupResource(name: string): Resources {
 
 export type Resources =
   | SpecificResource<AppForMimeTypeConfig>
+  | SpecificResource<BrewConfig>
+  | SpecificResource<DebianPackageConfig>
   | SpecificResource<DirectoryConfig>
   | SpecificResource<GnomeSettingsConfig>
   | SpecificResource<GnomeShellExtensionConfig>
@@ -63,11 +70,13 @@ export type Resources =
   | SpecificResource<InlineScriptConfig>
   | SpecificResource<LoginShellConfig>
   | SpecificResource<SymlinkConfig>
-  | SpecificResource<WebiConfig>
+  | SpecificResource<UrlScriptConfig>
   | SpecificResource<WebInstallConfig>;
 
 export interface ResourceConfigurationMap {
   appForMimeType: AppForMimeTypeConfig;
+  brew: BrewConfig;
+  debianPackage: DebianPackageConfig;
   directory: DirectoryConfig;
   gnomeSettings: GnomeSettingsConfig;
   gnomeShellExtension: GnomeShellExtensionConfig;
@@ -75,11 +84,13 @@ export interface ResourceConfigurationMap {
   inlineScript: InlineScriptConfig;
   loginShell: LoginShellConfig;
   symlink: SymlinkConfig;
-  webi: WebiConfig;
+  urlScript: UrlScriptConfig;
   webInstall: WebInstallConfig;
 }
 
 registerResource(AppForMimeType);
+registerResource(Brew);
+registerResource(DebianPackage);
 registerResource(Directory);
 registerResource(GnomeSettings);
 registerResource(GnomeShellExtension);
@@ -87,5 +98,5 @@ registerResource(GnomeShellExtensionInstaller);
 registerResource(InlineScript);
 registerResource(LoginShell);
 registerResource(Symlink);
-registerResource(Webi);
+registerResource(UrlScript);
 registerResource(WebInstall);

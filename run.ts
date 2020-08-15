@@ -42,6 +42,8 @@ export async function runConfigurationSet(
     await breadthFirst<WithDependencies>(root as WithDependencies, run);
   }
   log.info(
-    `Given ${givenConfigsCount} configs. Ran ${testsCounter} tests and ${setsCounter} sets.`
+    // subtract START node from the number of tests
+    `Given ${givenConfigsCount} configs. Ran ${testsCounter -
+      1} tests and ${setsCounter} sets.`
   );
 }
