@@ -1,5 +1,6 @@
 import { Config } from "../configuration.ts";
-import { download, log } from "../deps.ts";
+import { download, log, path } from "../deps.ts";
+import { command } from "../helpers/command.ts";
 import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { SpecificResource } from "../resource.ts";
 
@@ -11,6 +12,7 @@ const REPO = "https://github.com/brunelli/gnome-shell-extension-installer";
 const URL = `${REPO}/releases/download/v${VERSION}/${EXE_NAME}`;
 const LOCATION = "/usr/bin";
 const EXECUTABLE_MODE = 0o744;
+const TEMP_DIR_LINUX = "/tmp";
 
 export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionInstallerConfig> = {
   name: "gnomeShellExtensionInstaller",
@@ -37,9 +39,10 @@ export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionI
       try {
         await download(URL, {
           file: EXE_NAME,
-          dir: LOCATION,
+          dir: TEMP_DIR_LINUX,
           mode: EXECUTABLE_MODE
         });
+        await command(["sudo", "mv", path.join(TEMP_DIR_LINUX, EXE_NAME)]);
         if (verbose) {
           log.info(`Program ${EXE_NAME} installed on location '${LOCATION}'`);
         }
