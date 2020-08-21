@@ -1,5 +1,5 @@
 import { Config } from "../configuration.ts";
-import { download, ensureDir, log, path } from "../deps.ts";
+import { download, log, path } from "../deps.ts";
 import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { SpecificResource } from "../resource.ts";
 
@@ -11,6 +11,8 @@ const EXE_NAME = "gnome-shell-extension-installer";
 const VERSION = "1.7";
 const REPO = "https://github.com/brunelli/gnome-shell-extension-installer";
 const URL = `${REPO}/releases/download/v${VERSION}/${EXE_NAME}`;
+const LOCATION = "/usr/bin";
+const EXECUTABLE_MODE = 0o744;
 
 export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionInstallerConfig> = {
   name: "gnomeShellExtensionInstaller",
@@ -19,8 +21,8 @@ export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionI
     return `GNOME SHELL EXTENSION INSTALLER`;
   },
 
-  test: async function({ location }, verbose) {
-    if (await isExecutableCommand(path.join(location, EXE_NAME))) {
+  test: async function(verbose) {
+    if (await isExecutableCommand(EXE_NAME)) {
       if (verbose) {
         log.warning(
           `Program '${EXE_NAME}' is already installed on this machine`
@@ -32,17 +34,16 @@ export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionI
     }
   },
 
-  set: async ({ ensure = "present", location }, verbose) => {
+  set: async ({ ensure = "present" }, verbose) => {
     if (ensure === "present") {
-      await ensureDir(location);
       try {
         await download(URL, {
           file: EXE_NAME,
-          dir: location,
-          mode: 0o744
+          dir: LOCATION,
+          mode: EXECUTABLE_MODE
         });
         if (verbose) {
-          log.info(`Program ${EXE_NAME} installed on location '${location}'`);
+          log.info(`Program ${EXE_NAME} installed on location '${LOCATION}'`);
         }
       } catch (err) {
         log.error(err);
