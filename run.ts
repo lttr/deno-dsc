@@ -31,7 +31,11 @@ export async function runConfigurationSet(
       );
     } else {
       if (!result) {
+        log.debug(`Starting '${config.resource?.get(config)}'`);
+        const start = new Date();
         await config.resource?.set(config, verbose);
+        const duration = new Date().getTime() - start.getTime();
+        log.debug(`Done in ${(duration / 1000).toFixed(1)}s`);
         setsCounter += 1;
       }
     }
