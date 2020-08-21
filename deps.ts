@@ -31,6 +31,7 @@ export const deno = Deno;
 export { digraph, toDot } from "https://deno.land/x/graphviz/mod.ts";
 export { download } from "https://deno.land/x/download/mod.ts";
 export { isExecutable as isExecutableFile } from "https://deno.land/x/is_exe/mod.ts";
-export { jsonTree } from "https://deno.land/x/json_tree/mod.ts";
+// export { jsonTree } from "https://deno.land/x/json_tree/mod.ts";
+export { jsonTree } from "https://raw.githubusercontent.com/satty1987/json_tree/master/mod.ts";
 // export { open } from "https://deno.land/x/opener/mod.ts";
 export { open } from "https://raw.githubusercontent.com/denjucks/opener/master/mod.ts";
