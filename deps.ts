@@ -28,9 +28,9 @@ export { assert } from "https://deno.land/std@0.65.0/testing/asserts.ts";
 export const deno = Deno;
 
 // user land
-export { digraph, toDot } from "https://deno.land/x/graphviz/mod.ts@v0.2.1";
-export { download } from "https://deno.land/x/download/mod.ts@v1.0.0";
-export { isExecutable as isExecutableFile } from "https://deno.land/x/is_exe/mod.ts@v1.0.3";
+export { digraph, toDot } from "https://deno.land/x/graphviz@v0.2.1/mod.ts";
+export { download } from "https://deno.land/x/download@v1.0.0/mod.ts";
+export { isExecutable as isExecutableFile } from "https://deno.land/x/is_exe@v1.0.3/mod.ts";
 // export { jsonTree } from "https://deno.land/x/json_tree/mod.ts";
 export { jsonTree } from "https://raw.githubusercontent.com/satty1987/json_tree/master/mod.ts";
 // export { open } from "https://deno.land/x/opener/mod.ts";
