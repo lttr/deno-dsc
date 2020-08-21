@@ -10,7 +10,7 @@ const EXE_NAME = "gnome-shell-extension-installer";
 const VERSION = "1.7";
 const REPO = "https://github.com/brunelli/gnome-shell-extension-installer";
 const URL = `${REPO}/releases/download/v${VERSION}/${EXE_NAME}`;
-const LOCATION = "/usr/bin";
+const LOCATION = "/usr/bin/";
 const EXECUTABLE_MODE = 0o744;
 const TEMP_DIR_LINUX = "/tmp";
 
@@ -42,7 +42,12 @@ export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionI
           dir: TEMP_DIR_LINUX,
           mode: EXECUTABLE_MODE
         });
-        await command(["sudo", "mv", path.join(TEMP_DIR_LINUX, EXE_NAME)]);
+        await command([
+          "sudo",
+          "mv",
+          path.join(TEMP_DIR_LINUX, EXE_NAME),
+          path.join(LOCATION, EXE_NAME)
+        ]);
         if (verbose) {
           log.info(`Program ${EXE_NAME} installed on location '${LOCATION}'`);
         }
