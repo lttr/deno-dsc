@@ -1,11 +1,9 @@
 import { Config } from "../configuration.ts";
-import { download, log, path } from "../deps.ts";
+import { download, log } from "../deps.ts";
 import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { SpecificResource } from "../resource.ts";
 
-export interface GnomeShellExtensionInstallerConfig extends Config {
-  location: string;
-}
+export interface GnomeShellExtensionInstallerConfig extends Config {}
 
 const EXE_NAME = "gnome-shell-extension-installer";
 const VERSION = "1.7";
