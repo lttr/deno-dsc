@@ -4,6 +4,8 @@ import {
   AppForMimeType,
   AppForMimeTypeConfig
 } from "./resources/appForMimeType.ts";
+import { AptInstall, AptInstallConfig } from "./resources/aptInstall.ts";
+import { AptUpdate } from "./resources/aptUpdate.ts";
 import { Brew, BrewConfig } from "./resources/brew.ts";
 import {
   DebianPackage,
@@ -27,9 +29,6 @@ import { LoginShell, LoginShellConfig } from "./resources/loginShell.ts";
 import { Symlink, SymlinkConfig } from "./resources/symlink.ts";
 import { UrlScript, UrlScriptConfig } from "./resources/urlScript.ts";
 import { WebInstall, WebInstallConfig } from "./resources/webInstall.ts";
-import { AptUpdate } from "./resources/aptUpdate.js.ts";
-import { AptUpdateConfig } from "./resources/aptUpdate.js.ts";
-import { AptUpdateConfig } from "./resources/aptUpdate.js.ts";
 
 export type SpecificResource<T extends Config> = {
   name: string;
@@ -66,6 +65,7 @@ export function lookupResource(name: string): Resources {
 export type Resources =
   | SpecificResource<AntibodyConfig>
   | SpecificResource<AppForMimeTypeConfig>
+  | SpecificResource<AptInstallConfig>
   | SpecificResource<AptUpdateConfig>
   | SpecificResource<BrewConfig>
   | SpecificResource<DebianPackageConfig>
@@ -82,6 +82,7 @@ export type Resources =
 export interface ResourceConfigurationMap {
   antibody: AntibodyConfig;
   appForMimeType: AppForMimeTypeConfig;
+  aptInstall: AptInstallConfig;
   aptUpdate: AptUpdateConfig;
   brew: BrewConfig;
   debianPackage: DebianPackageConfig;
@@ -98,6 +99,7 @@ export interface ResourceConfigurationMap {
 
 registerResource(Antibody);
 registerResource(AppForMimeType);
+registerResource(AptInstall);
 registerResource(AptUpdate);
 registerResource(Brew);
 registerResource(DebianPackage);
