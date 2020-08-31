@@ -1,9 +1,10 @@
 import { Config } from "./configuration.ts";
+import { Antibody, AntibodyConfig } from "./resources/antibody.ts";
 import {
   AppForMimeType,
   AppForMimeTypeConfig
 } from "./resources/appForMimeType.ts";
-import { BrewConfig, Brew } from "./resources/brew.ts";
+import { Brew, BrewConfig } from "./resources/brew.ts";
 import {
   DebianPackage,
   DebianPackageConfig
@@ -60,6 +61,7 @@ export function lookupResource(name: string): Resources {
 }
 
 export type Resources =
+  | SpecificResource<AntibodyConfig>
   | SpecificResource<AppForMimeTypeConfig>
   | SpecificResource<BrewConfig>
   | SpecificResource<DebianPackageConfig>
@@ -74,6 +76,7 @@ export type Resources =
   | SpecificResource<WebInstallConfig>;
 
 export interface ResourceConfigurationMap {
+  antibody: AntibodyConfig;
   appForMimeType: AppForMimeTypeConfig;
   brew: BrewConfig;
   debianPackage: DebianPackageConfig;
@@ -88,6 +91,7 @@ export interface ResourceConfigurationMap {
   webInstall: WebInstallConfig;
 }
 
+registerResource(Antibody);
 registerResource(AppForMimeType);
 registerResource(Brew);
 registerResource(DebianPackage);
