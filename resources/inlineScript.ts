@@ -1,7 +1,7 @@
 import { Config } from "../configuration.ts";
-import { deno, log } from "../deps.ts";
-import { SpecificResource } from "../resource.ts";
+import { log } from "../deps.ts";
 import { command } from "../helpers/command.ts";
+import { SpecificResource } from "../resource.ts";
 
 export interface InlineScriptConfig extends Config {
   name: string;

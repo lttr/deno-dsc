@@ -5,7 +5,7 @@ import {
   AppForMimeTypeConfig
 } from "./resources/appForMimeType.ts";
 import { AptInstall, AptInstallConfig } from "./resources/aptInstall.ts";
-import { AptUpdate } from "./resources/aptUpdate.ts";
+import { AptUpdate, AptUpdateConfig } from "./resources/aptUpdate.ts";
 import { Brew, BrewConfig } from "./resources/brew.ts";
 import {
   DebianPackage,
