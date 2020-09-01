@@ -14,10 +14,10 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
   name: "gnomeSettings",
 
   get: config => {
-    return `GNOME SETTINGS ${config.schema} ${config.key} ${config.value}`;
+    return `GNOME SETTINGS ${ config.schema } ${ config.key } ${ config.value }`;
   },
 
-  test: async function({ schema, key, value }, verbose) {
+  test: async function ({ schema, key, value }, verbose) {
     if (!(await isExecutableCommand("gsettings"))) {
       log.error(`'gsettings' is probably not an executable on this system`);
       deno.exit(1);
@@ -25,20 +25,31 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
     const { output } = await command(["gsettings", "get", schema, key]);
     let normalizedValue = output.replace(/^'/, "").replace(/'$/, "");
     if (typeof value === "number") {
+      let parsedNumber
       try {
-        const parsedNumber = parseFloat(normalizedValue);
+        parsedNumber = parseFloat(normalizedValue);
         const normalizedNumber = parsedNumber.toFixed(1);
         if (Number.isInteger(parsedNumber)) {
           normalizedValue = parsedNumber.toString();
         } else if ("NaN" !== normalizedNumber) {
           normalizedValue = normalizedNumber;
         }
-      } catch {}
+      } catch { }
+      if (value === parsedNumber) {
+        if (verbose) {
+          log.warning(
+            `Gnome settings '${ schema } ${ key }' is already set to '${ value }'`
+          );
+        }
+        return true;
+      } else {
+        return false;
+      }
     }
     if (normalizedValue === value.toString()) {
       if (verbose) {
         log.warning(
-          `Gnome settings '${schema} ${key}' is already set to '${value}'`
+          `Gnome settings '${ schema } ${ key }' is already set to '${ value }'`
         );
       }
       return true;
@@ -58,11 +69,11 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
       ]);
       if (success) {
         if (verbose) {
-          log.info(`Gnome settings '${schema} ${key}' was set to '${value}'`);
+          log.info(`Gnome settings '${ schema } ${ key }' was set to '${ value }'`);
         }
       } else {
         log.error(
-          `Gnome settings '${schema} ${key}' was not set to '${value}'`
+          `Gnome settings '${ schema } ${ key }' was not set to '${ value }'`
         );
       }
     } else {
