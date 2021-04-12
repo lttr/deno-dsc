@@ -3,8 +3,8 @@ import { CustomResourceConfig } from "./example-custom-resource.ts";
 
 const optDirectory: Config = {
   directory: {
-    path: "/opt"
-  }
+    path: "/opt",
+  },
 };
 
 type CustomResource = {
@@ -15,20 +15,20 @@ export const configuration: (Config & CustomResource)[] = [
   {
     directory: {
       path: "/temporary",
-      ensure: "absent"
-    }
+      ensure: "absent",
+    },
   },
   optDirectory,
   {
     symlink: {
       dest: "/opt",
       src: "/tmp/this-is-opt",
-      dependsOn: optDirectory
-    }
+      dependsOn: optDirectory,
+    },
   },
   {
     customResource: {
-      foo: "bar"
-    }
-  }
+      foo: "bar",
+    },
+  },
 ];

@@ -5,7 +5,7 @@ import {
   fs,
   getFileInfoType,
   log,
-  path
+  path,
 } from "../deps.ts";
 import { SpecificResource } from "../resource.ts";
 
@@ -21,7 +21,7 @@ export const Symlink: SpecificResource<SymlinkConfig> = {
     return `SYMLINK from ${dest} to ${src}`;
   },
 
-  test: async function({ ensure = "present", src, dest }, verbose) {
+  test: async function ({ ensure = "present", src, dest }, verbose) {
     const exists = await symlinkExists(src, dest);
     if (ensure === "present") {
       if (exists && verbose) {
@@ -31,7 +31,7 @@ export const Symlink: SpecificResource<SymlinkConfig> = {
     } else {
       if (!exists && verbose) {
         log.warning(
-          `Symlink '${dest} -> ${path.resolve(src)}' does not exists`
+          `Symlink '${dest} -> ${path.resolve(src)}' does not exists`,
         );
       }
       return !exists;
@@ -60,12 +60,12 @@ export const Symlink: SpecificResource<SymlinkConfig> = {
         }
       }
     }
-  }
+  },
 };
 
 export async function symlinkExists(
   src: string,
-  dest: string
+  dest: string,
 ): Promise<boolean> {
   if (await fs.exists(dest)) {
     const destStatInfo = await deno.lstat(dest);

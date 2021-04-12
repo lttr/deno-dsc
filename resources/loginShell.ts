@@ -10,11 +10,11 @@ export interface LoginShellConfig extends Config {
 export const LoginShell: SpecificResource<LoginShellConfig> = {
   name: "loginShell",
 
-  get: config => {
+  get: (config) => {
     return `LOGIN SHELL ${config.shell}`;
   },
 
-  test: async function({ shell }, verbose) {
+  test: async function ({ shell }, verbose) {
     if (deno.env.get("ZSH_NAME") || deno.env.get("ZSH_DIR")) {
       if (verbose) {
         log.warning(`Login shell is already set to '${shell}'`);
@@ -37,8 +37,8 @@ export const LoginShell: SpecificResource<LoginShellConfig> = {
       }
     } else {
       log.warning(
-        `It does not make sense to ensure '${shell}' shell is absent`
+        `It does not make sense to ensure '${shell}' shell is absent`,
       );
     }
-  }
+  },
 };

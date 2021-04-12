@@ -16,7 +16,7 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
     return `URL SCRIPT '${name} from '${url}'`;
   },
 
-  test: async function({ name }, verbose) {
+  test: async function ({ name }, verbose) {
     if (await isExecutableCommand(name)) {
       if (verbose) {
         log.warning(`Program '${name}' is already installed on this machine`);
@@ -36,7 +36,7 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
           "--show-error",
           "--silent",
           "--location",
-          url
+          url,
         ]);
         if (downloaded) {
           const { success } = await command(["bash", "-c", script]);
@@ -55,5 +55,5 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
     } else {
       log.warning(`Removing is not implemented`);
     }
-  }
+  },
 };

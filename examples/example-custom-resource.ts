@@ -3,7 +3,7 @@ import { Config, Resource } from "../mod.ts";
 export const CustomResource: Resource = {
   name: "customResource",
 
-  get: config => {
+  get: (config) => {
     return config.foo;
   },
 
@@ -11,7 +11,7 @@ export const CustomResource: Resource = {
     return false;
   },
 
-  set: async (config, verbose) => {}
+  set: async (config, verbose) => {},
 };
 
 export interface CustomResourceConfig extends Config {

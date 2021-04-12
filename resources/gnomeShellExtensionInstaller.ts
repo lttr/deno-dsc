@@ -14,18 +14,20 @@ const LOCATION = "/usr/bin/";
 const EXECUTABLE_MODE = 0o744;
 const TEMP_DIR_LINUX = "/tmp";
 
-export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionInstallerConfig> = {
+export const GnomeShellExtensionInstaller: SpecificResource<
+  GnomeShellExtensionInstallerConfig
+> = {
   name: "gnomeShellExtensionInstaller",
 
-  get: _ => {
+  get: (_) => {
     return `GNOME SHELL EXTENSION INSTALLER`;
   },
 
-  test: async function(verbose) {
+  test: async function (verbose) {
     if (await isExecutableCommand(EXE_NAME)) {
       if (verbose) {
         log.warning(
-          `Program '${EXE_NAME}' is already installed on this machine`
+          `Program '${EXE_NAME}' is already installed on this machine`,
         );
       }
       return true;
@@ -40,13 +42,13 @@ export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionI
         await download(URL, {
           file: EXE_NAME,
           dir: TEMP_DIR_LINUX,
-          mode: EXECUTABLE_MODE
+          mode: EXECUTABLE_MODE,
         });
         await command([
           "sudo",
           "mv",
           path.join(TEMP_DIR_LINUX, EXE_NAME),
-          path.join(LOCATION, EXE_NAME)
+          path.join(LOCATION, EXE_NAME),
         ]);
         if (verbose) {
           log.info(`Program ${EXE_NAME} installed on location '${LOCATION}'`);
@@ -58,5 +60,5 @@ export const GnomeShellExtensionInstaller: SpecificResource<GnomeShellExtensionI
     } else {
       log.warning(`Removing is not implemented`);
     }
-  }
+  },
 };

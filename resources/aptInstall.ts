@@ -14,7 +14,7 @@ export const AptInstall: SpecificResource<AptInstallConfig> = {
     return `APT INSTALL ${packageName}`;
   },
 
-  test: async function({ packageName }) {
+  test: async function ({ packageName }) {
     const { success } = await command(["dpkg-query", "-W", packageName]);
     return success;
   },
@@ -26,7 +26,7 @@ export const AptInstall: SpecificResource<AptInstallConfig> = {
         "apt-get",
         "install",
         "-y",
-        packageName
+        packageName,
       ]);
       if (success) {
         if (verbose) {
@@ -36,5 +36,5 @@ export const AptInstall: SpecificResource<AptInstallConfig> = {
     } else {
       log.warning(`Removing is not implemented`);
     }
-  }
+  },
 };

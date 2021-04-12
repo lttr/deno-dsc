@@ -2,27 +2,27 @@ import { Config } from "./configuration.ts";
 import { Antibody, AntibodyConfig } from "./resources/antibody.ts";
 import {
   AppForMimeType,
-  AppForMimeTypeConfig
+  AppForMimeTypeConfig,
 } from "./resources/appForMimeType.ts";
 import { AptInstall, AptInstallConfig } from "./resources/aptInstall.ts";
 import { AptUpdate, AptUpdateConfig } from "./resources/aptUpdate.ts";
 import { Brew, BrewConfig } from "./resources/brew.ts";
 import {
   DebianPackage,
-  DebianPackageConfig
+  DebianPackageConfig,
 } from "./resources/debianPackage.ts";
 import { Directory, DirectoryConfig } from "./resources/directory.ts";
 import {
   GnomeSettings,
-  GnomeSettingsConfig
+  GnomeSettingsConfig,
 } from "./resources/gnomeSettings.ts";
 import {
   GnomeShellExtension,
-  GnomeShellExtensionConfig
+  GnomeShellExtensionConfig,
 } from "./resources/gnomeShellExtension.ts";
 import {
   GnomeShellExtensionInstaller,
-  GnomeShellExtensionInstallerConfig
+  GnomeShellExtensionInstallerConfig,
 } from "./resources/gnomeShellExtensionInstaller.ts";
 import { InlineScript, InlineScriptConfig } from "./resources/inlineScript.ts";
 import { LoginShell, LoginShellConfig } from "./resources/loginShell.ts";
@@ -45,7 +45,8 @@ export interface Resource {
 }
 
 export type ResourceNames = keyof ResourceConfigurationMap;
-export type ResourceConfigurations = ResourceConfigurationMap[keyof ResourceConfigurationMap];
+export type ResourceConfigurations =
+  ResourceConfigurationMap[keyof ResourceConfigurationMap];
 
 const resources: Resource[] = [];
 
@@ -54,7 +55,7 @@ export function registerResource(resource: Resource): void {
 }
 
 export function lookupResource(name: string): Resources {
-  const found = resources.find(resource => resource.name === name);
+  const found = resources.find((resource) => resource.name === name);
   if (found) {
     return found;
   } else {

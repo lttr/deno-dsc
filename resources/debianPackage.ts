@@ -1,5 +1,5 @@
 import { Config } from "../configuration.ts";
-import { download, log, deno, path } from "../deps.ts";
+import { deno, download, log, path } from "../deps.ts";
 import { command } from "../helpers/command.ts";
 import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { SpecificResource } from "../resource.ts";
@@ -18,7 +18,7 @@ export const DebianPackage: SpecificResource<DebianPackageConfig> = {
     return `DEBIAN PACKAGE '${name} from '${url}'`;
   },
 
-  test: async function({ name }, verbose) {
+  test: async function ({ name }, verbose) {
     if (await isExecutableCommand(name)) {
       if (verbose) {
         log.warning(`Program '${name}' is already installed on this machine`);
@@ -36,13 +36,13 @@ export const DebianPackage: SpecificResource<DebianPackageConfig> = {
       try {
         await download(url, {
           file: fileName,
-          dir: TEMP_DIR_LINUX
+          dir: TEMP_DIR_LINUX,
         });
         const { success } = await command([
           "sudo",
           "dpkg",
           "--install",
-          filePath
+          filePath,
         ]);
         if (!success) {
           throw new Error(`dpkg was unable to install from path '${filePath}'`);
@@ -63,5 +63,5 @@ export const DebianPackage: SpecificResource<DebianPackageConfig> = {
     } else {
       log.warning(`Removing is not implemented`);
     }
-  }
+  },
 };

@@ -1,7 +1,7 @@
 import {
+  Resource,
   ResourceConfigurationMap,
   ResourceNames,
-  Resource
 } from "./resource.ts";
 
 interface CommonConfigurationProperties {

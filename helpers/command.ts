@@ -1,7 +1,7 @@
 import { deno } from "../deps.ts";
 
 export async function command(
-  params: string[]
+  params: string[],
 ): Promise<{
   success: boolean;
   code: number;
@@ -9,7 +9,7 @@ export async function command(
 }> {
   const process = deno.run({
     cmd: params,
-    stdout: "piped"
+    stdout: "piped",
   });
   const { success, code } = await process.status();
   const stdout = await process.output();

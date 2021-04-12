@@ -16,7 +16,7 @@ export const InlineScript: SpecificResource<InlineScriptConfig> = {
     return `INLINE SCRIPT ${name}`;
   },
 
-  test: async function({ name, testScript }, verbose) {
+  test: async function ({ name, testScript }, verbose) {
     const { success } = await command(["sh", "-c", testScript]);
     if (success) {
       if (verbose) {
@@ -41,5 +41,5 @@ export const InlineScript: SpecificResource<InlineScriptConfig> = {
     } else {
       log.warning(`Inline script does not make sence to be absent`);
     }
-  }
+  },
 };

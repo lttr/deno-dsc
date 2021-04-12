@@ -8,9 +8,9 @@ await log.setup({
     console: new log.handlers.ConsoleHandler("DEBUG"),
     file: new log.handlers.FileHandler("DEBUG", {
       filename: `/tmp/deno-dsc-${new Date().getTime()}.log`,
-      formatter: "{levelName} {msg}"
-    })
-  }
+      formatter: "{levelName} {msg}",
+    }),
+  },
 });
 
 export { fs };

@@ -8,15 +8,15 @@ export interface AptUpdateConfig extends Config {}
 export const AptUpdate: SpecificResource<AptUpdateConfig> = {
   name: "aptUpdate",
 
-  get: _ => {
+  get: (_) => {
     return `APT UPDATE`;
   },
 
-  test: async function() {
+  test: async function () {
     return false;
   },
 
-  set: async verbose => {
+  set: async (verbose) => {
     try {
       await command(["sudo", "apt-get", "update"]);
       if (verbose) {
@@ -26,5 +26,5 @@ export const AptUpdate: SpecificResource<AptUpdateConfig> = {
       log.error(err);
       log.error(`Apt failed to get updated`);
     }
-  }
+  },
 };

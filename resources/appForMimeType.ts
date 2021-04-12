@@ -16,7 +16,7 @@ export const AppForMimeType: SpecificResource<AppForMimeTypeConfig> = {
     return `APP FOR MIME TYPE ${app} ${mimeType}`;
   },
 
-  test: async function({ app, mimeType }, verbose) {
+  test: async function ({ app, mimeType }, verbose) {
     if (!(await isExecutableCommand("xdg-mime"))) {
       log.error(`'xdg-mime' is probably not an executable on this system`);
       deno.exit(1);
@@ -25,7 +25,7 @@ export const AppForMimeType: SpecificResource<AppForMimeTypeConfig> = {
       "xdg-mime",
       "query",
       "default",
-      mimeType
+      mimeType,
     ]);
     if (output === app) {
       if (verbose) {
@@ -46,11 +46,11 @@ export const AppForMimeType: SpecificResource<AppForMimeTypeConfig> = {
         }
       } else {
         log.error(
-          `Mime type '${mimeType}' was not set to be handled by '${app}'`
+          `Mime type '${mimeType}' was not set to be handled by '${app}'`,
         );
       }
     } else {
       log.warning(`Absent mime type handler is not implemented`);
     }
-  }
+  },
 };

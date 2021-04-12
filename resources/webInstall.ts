@@ -1,5 +1,5 @@
 import { Config } from "../configuration.ts";
-import { log, deno } from "../deps.ts";
+import { deno, log } from "../deps.ts";
 import { command } from "../helpers/command.ts";
 import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { SpecificResource } from "../resource.ts";
@@ -16,7 +16,7 @@ export const WebInstall: SpecificResource<WebInstallConfig> = {
     return `WEB INSTALL ${name}@${version}`;
   },
 
-  test: async function({ name }, verbose) {
+  test: async function ({ name }, verbose) {
     if (await isExecutableCommand(name)) {
       if (verbose) {
         log.warning(`Tool '${name}' is already installed`);
@@ -31,7 +31,7 @@ export const WebInstall: SpecificResource<WebInstallConfig> = {
     const webi = "webi";
     if (!(await isExecutableCommand(webi))) {
       log.error(
-        `'${webi}' is needed and is probably not an executable on this system`
+        `'${webi}' is needed and is probably not an executable on this system`,
       );
       deno.exit(1);
     }
@@ -45,5 +45,5 @@ export const WebInstall: SpecificResource<WebInstallConfig> = {
     } else {
       log.warning(`Removing is not implemented`);
     }
-  }
+  },
 };

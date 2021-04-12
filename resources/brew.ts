@@ -1,5 +1,5 @@
 import { Config } from "../configuration.ts";
-import { log, deno } from "../deps.ts";
+import { deno, log } from "../deps.ts";
 import { command } from "../helpers/command.ts";
 import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { SpecificResource } from "../resource.ts";
@@ -15,7 +15,7 @@ export const Brew: SpecificResource<BrewConfig> = {
     return `BREW ${name}`;
   },
 
-  test: async function({ name }, verbose) {
+  test: async function ({ name }, verbose) {
     if (await isExecutableCommand(name)) {
       if (verbose) {
         log.warning(`Program '${name}' is already installed`);
@@ -30,7 +30,7 @@ export const Brew: SpecificResource<BrewConfig> = {
     const brew = "brew";
     if (!(await isExecutableCommand(brew))) {
       log.error(
-        `'${brew}' is needed and is probably not an executable on this system`
+        `'${brew}' is needed and is probably not an executable on this system`,
       );
       deno.exit(1);
     }
@@ -44,5 +44,5 @@ export const Brew: SpecificResource<BrewConfig> = {
     } else {
       log.warning(`Removing is not implemented`);
     }
-  }
+  },
 };

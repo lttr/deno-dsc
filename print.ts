@@ -1,14 +1,14 @@
 import { Config } from "./configuration.ts";
 import { jsonTree } from "./deps.ts";
 import {
-  createRootNode,
   constructDependenciesTree,
+  createRootNode,
   removeBackreferences,
-  unwrapConfig
+  unwrapConfig,
 } from "./graph.ts";
 
 export async function printConfigurationSet(
-  configurationSet: Config[]
+  configurationSet: Config[],
 ): Promise<void> {
   const root = createRootNode();
   constructDependenciesTree(unwrapConfig(configurationSet, root));

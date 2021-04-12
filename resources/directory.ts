@@ -1,5 +1,5 @@
 import { Config } from "../configuration.ts";
-import { deno, ensureDir, dirExists, log } from "../deps.ts";
+import { deno, dirExists, ensureDir, log } from "../deps.ts";
 import { SpecificResource } from "../resource.ts";
 
 export interface DirectoryConfig extends Config {
@@ -13,7 +13,7 @@ export const Directory: SpecificResource<DirectoryConfig> = {
     return `DIRECTORY on path ${path}${ensure === "absent" ? " ABSENT" : ""}`;
   },
 
-  test: async function({ ensure = "present", path }, verbose) {
+  test: async function ({ ensure = "present", path }, verbose) {
     const exists = await dirExists(path);
     if (ensure === "present") {
       if (exists && verbose) {
@@ -50,5 +50,5 @@ export const Directory: SpecificResource<DirectoryConfig> = {
         }
       }
     }
-  }
+  },
 };

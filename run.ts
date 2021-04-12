@@ -4,7 +4,7 @@ import {
   breadthFirst,
   constructDependenciesTree,
   createRootNode,
-  unwrapConfig
+  unwrapConfig,
 } from "./graph.ts";
 
 export interface RunOptions {
@@ -14,20 +14,19 @@ export interface RunOptions {
 
 export async function runConfigurationSet(
   configurationSet: Config[],
-  options: RunOptions = {}
+  options: RunOptions = {},
 ): Promise<void> {
   const { verbose = false, dryRun = false } = options;
   const givenConfigsCount = configurationSet.length;
   let testsCounter = 0;
   let setsCounter = 0;
   async function run(config: Config) {
-    if (config.dependsOn != null) {
-    }
+    if (config.dependsOn != null) {}
     const result = await config.resource?.test(config, verbose);
     testsCounter += 1;
     if (dryRun) {
       log.info(
-        `${result ? "Do not" : "Do"} run '${config.resource?.get(config)}'`
+        `${result ? "Do not" : "Do"} run '${config.resource?.get(config)}'`,
       );
     } else {
       if (!result) {
@@ -48,6 +47,6 @@ export async function runConfigurationSet(
   log.info(
     // subtract START node from the number of tests
     `Given ${givenConfigsCount} configs. Ran ${testsCounter -
-      1} tests and ${setsCounter} sets.`
+      1} tests and ${setsCounter} sets.`,
   );
 }

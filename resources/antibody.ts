@@ -1,5 +1,5 @@
 import { Config } from "../configuration.ts";
-import { log, deno } from "../deps.ts";
+import { deno, log } from "../deps.ts";
 import { command } from "../helpers/command.ts";
 import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { SpecificResource } from "../resource.ts";
@@ -17,7 +17,7 @@ export const Antibody: SpecificResource<AntibodyConfig> = {
     return `ANTIBODY ${packageName}`;
   },
 
-  test: async function() {
+  test: async function () {
     // TODO Implement package detection
     return false;
   },
@@ -25,7 +25,7 @@ export const Antibody: SpecificResource<AntibodyConfig> = {
   set: async ({ ensure = "present", packageName }, verbose) => {
     if (!(await isExecutableCommand(EXE_NAME))) {
       log.error(
-        `'${EXE_NAME}' is needed and is probably not an executable on this system`
+        `'${EXE_NAME}' is needed and is probably not an executable on this system`,
       );
       deno.exit(1);
     }
@@ -39,5 +39,5 @@ export const Antibody: SpecificResource<AntibodyConfig> = {
     } else {
       log.warning(`Removing is not implemented`);
     }
-  }
+  },
 };

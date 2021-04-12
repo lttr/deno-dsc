@@ -3,7 +3,7 @@ import { deno, digraph, open, toDot } from "../deps.ts";
 import { htmlPage } from "./html-page.ts";
 
 export function depGraph(config: Config[]): void {
-  const G = digraph("Execution tree", { rankdir: "LR" }, g => {
+  const G = digraph("Execution tree", { rankdir: "LR" }, (g) => {
     for (const node of config) {
       if (node.resource) {
         let description = node.resource.get(node);
@@ -15,7 +15,7 @@ export function depGraph(config: Config[]): void {
         g.node(description, {
           fontname: "Arial",
           fontsize: "12",
-          color: isAbsent(node) ? "brown" : "darkgreen"
+          color: isAbsent(node) ? "brown" : "darkgreen",
         });
         const dependency = node.dependsOn?.resource?.get(node.dependsOn);
         if (dependency) {
