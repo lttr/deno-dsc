@@ -19,9 +19,9 @@ export const LoginShell: SpecificResource<LoginShellConfig> = {
       if (verbose) {
         log.warning(`Login shell is already set to '${shell}'`);
       }
-      return true;
+      return await Promise.resolve(true);
     } else {
-      return false;
+      return await Promise.resolve(false);
     }
   },
 

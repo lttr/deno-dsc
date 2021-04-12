@@ -34,7 +34,7 @@ function unwrapItem(wrappedConfiguration: Config) {
 }
 
 export async function removeBackreferences(root: Config) {
-  function removeDependsOn(config: any) {
+  function removeDependsOn(config: Config) {
     delete config.dependsOn;
   }
   if (root.dependencies) {
@@ -51,7 +51,7 @@ export function createRootNode(): Config {
       name: "root",
       get: (c: Config) => "START",
       set: async () => {},
-      test: async () => true,
+      test: async () => await Promise.resolve(true),
     },
     dependencies: [],
   };

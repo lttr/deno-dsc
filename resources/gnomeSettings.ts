@@ -34,7 +34,9 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
         } else if ("NaN" !== normalizedNumber) {
           normalizedValue = normalizedNumber;
         }
-      } catch {}
+      } catch (e) {
+        console.log(e);
+      }
       if (value === parsedNumber) {
         if (verbose) {
           log.warning(

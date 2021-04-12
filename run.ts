@@ -21,7 +21,9 @@ export async function runConfigurationSet(
   let testsCounter = 0;
   let setsCounter = 0;
   async function run(config: Config) {
-    if (config.dependsOn != null) {}
+    if (config.dependsOn != null) {
+      // TODO what is this branch for?
+    }
     const result = await config.resource?.test(config, verbose);
     testsCounter += 1;
     if (dryRun) {
