@@ -18,5 +18,5 @@ type ResourceSpecificConfig = {
 export type Config = CommonConfigurationProperties & ResourceSpecificConfig;
 
 export interface WithDependencies {
-  dependencies: any[];
+  dependencies: Config[];
 }
