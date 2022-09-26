@@ -10,7 +10,7 @@ export function showDepGraph(configurationSet: Config[]): void {
 
 export function unwrapConfig(
   configurationSet: Config[],
-  defaultDependsOn: Config,
+  defaultDependsOn: Config
 ): Config[] {
   return configurationSet.map((wrappedConfiguration) => {
     const { key, unwrappedConfiguration } = unwrapItem(wrappedConfiguration);
@@ -18,7 +18,7 @@ export function unwrapConfig(
     unwrappedConfiguration.resource = resource;
     if (unwrappedConfiguration.dependsOn) {
       unwrappedConfiguration.dependsOn = unwrapItem(
-        unwrappedConfiguration.dependsOn,
+        unwrappedConfiguration.dependsOn
       ).unwrappedConfiguration;
     } else {
       unwrappedConfiguration.dependsOn = defaultDependsOn;
@@ -40,7 +40,7 @@ export async function removeBackreferences(root: Config) {
   if (root.dependencies) {
     await breadthFirst<WithDependencies>(
       root as WithDependencies,
-      removeDependsOn,
+      removeDependsOn
     );
   }
 }
@@ -49,7 +49,7 @@ export function createRootNode(): Config {
   return {
     resource: {
       name: "root",
-      get: (c: Config) => "START",
+      get: (_c: Config) => "START",
       set: async () => {},
       test: async () => await Promise.resolve(true),
     },
@@ -71,10 +71,10 @@ export function constructDependenciesTree(configurationSet: Config[]) {
 
 export async function breadthFirst<T extends WithDependencies>(
   node: T,
-  action: (node: T) => Promise<void> | void,
+  action: (node: Config) => Promise<void> | void
 ) {
-  const queue = new Queue(node);
-  async function process(queue: Queue<T>) {
+  const queue = new Queue<Config>(node);
+  async function process(queue: Queue<Config>) {
     const node = queue.pop();
     if (node) {
       await action(node);
