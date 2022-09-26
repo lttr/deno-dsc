@@ -33,5 +33,5 @@ export { download } from "https://deno.land/x/download@v1.0.0/mod.ts";
 export { isExecutable as isExecutableFile } from "https://deno.land/x/is_exe@v1.0.3/mod.ts";
 // export { jsonTree } from "https://deno.land/x/json_tree/mod.ts";
 export { jsonTree } from "https://raw.githubusercontent.com/satty1987/json_tree/master/mod.ts";
-// export { open } from "https://deno.land/x/opener/mod.ts";
-export { open } from "https://raw.githubusercontent.com/denjucks/opener/master/mod.ts";
+import * as opener from "https://deno.land/x/open@v0.0.5/index.ts";
+export const open = opener.open;
