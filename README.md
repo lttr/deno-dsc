@@ -26,7 +26,7 @@ start it multiple times without worries.
 
 Add configuration type and implement the resource
 
-```ts
+```typescript
 export interface LoginShellConfig extends Config {
   shell: "zsh";
 }
@@ -47,12 +47,18 @@ export const LoginShell: Resource<LoginShellConfig> = {
 
 Add to list of types of resources
 
-```ts
+```typescript
 type MyResources = Resources | Resource<LoginShellConfig>;
 ```
 
 Registr the new resource
 
-```
+```typescript
 registerResource(LoginShell);
+```
+
+## Test
+
+```
+deno task test
 ```
