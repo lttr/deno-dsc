@@ -18,8 +18,8 @@ export const GnomeShellExtension: SpecificResource<GnomeShellExtensionConfig> =
     },
 
     /**
-   * Checks if extension is enabled in gsettings
-   */
+     * Checks if extension is enabled in gsettings
+     */
     test: async function ({ fullName }, verbose) {
       if (!(await isExecutableCommand("gsettings"))) {
         log.error(

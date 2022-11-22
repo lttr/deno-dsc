@@ -14,6 +14,6 @@ export async function command(
   const { success, code } = await process.status();
   const stdout = await process.output();
   const output = new TextDecoder().decode(stdout).trim();
-  await process.close();
+  process.close();
   return { success, code, output };
 }

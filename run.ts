@@ -48,7 +48,9 @@ export async function runConfigurationSet(
   }
   log.info(
     // subtract START node from the number of tests
-    `Given ${givenConfigsCount} configs. Ran ${testsCounter -
-      1} tests and ${setsCounter} sets.`,
+    `Given ${givenConfigsCount} configs. Ran ${
+      testsCounter -
+      1
+    } tests and ${setsCounter} sets.`,
   );
 }

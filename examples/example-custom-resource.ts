@@ -3,15 +3,15 @@ import { Config, Resource } from "../mod.ts";
 export const CustomResource: Resource = {
   name: "customResource",
 
-  get: (config) => {
+  get: (config: CustomResourceConfig) => {
     return config.foo;
   },
 
-  test: async (config, verbose) => {
+  test: (_config, _verbose) => {
     return false;
   },
 
-  set: async (config, verbose) => {},
+  set: async (_config, _verbose) => {},
 };
 
 export interface CustomResourceConfig extends Config {

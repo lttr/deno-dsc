@@ -3,7 +3,7 @@ import { log } from "../deps.ts";
 import { command } from "../helpers/command.ts";
 import { SpecificResource } from "../resource.ts";
 
-export interface AptUpdateConfig extends Config {}
+export type AptUpdateConfig = Config;
 
 export const AptUpdate: SpecificResource<AptUpdateConfig> = {
   name: "aptUpdate",
@@ -12,7 +12,7 @@ export const AptUpdate: SpecificResource<AptUpdateConfig> = {
     return `APT UPDATE`;
   },
 
-  test: async function () {
+  test: function () {
     return false;
   },
 

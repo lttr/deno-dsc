@@ -7,13 +7,16 @@ import { SpecificResource } from "../resource.ts";
 export interface UrlScriptConfig extends Config {
   name: string;
   url: string;
+  params?: string[];
 }
 
 export const UrlScript: SpecificResource<UrlScriptConfig> = {
   name: "urlScript",
 
-  get: ({ name, url }) => {
-    return `URL SCRIPT '${name} from '${url}'`;
+  get: ({ name, url, params }) => {
+    return `URL SCRIPT '${name} from '${url}' with params '${params.join(
+      " "
+    )}'`;
   },
 
   test: async function ({ name }, verbose) {
@@ -27,7 +30,7 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
     }
   },
 
-  set: async ({ ensure = "present", name, url }, verbose) => {
+  set: async ({ ensure = "present", name, url, params }, verbose) => {
     if (ensure === "present") {
       try {
         const { success: downloaded, output: script } = await command([
@@ -39,7 +42,7 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
           url,
         ]);
         if (downloaded) {
-          const { success } = await command(["bash", "-c", script]);
+          const { success } = await command(["bash", "-c", script, ...params]);
           if (success) {
             if (verbose) {
               log.info(`Program ${name} was installed`);

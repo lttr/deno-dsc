@@ -4,22 +4,21 @@ import { command } from "../helpers/command.ts";
 import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import { SpecificResource } from "../resource.ts";
 
-export interface BrewConfig extends Config {
+export interface VoltaConfig extends Config {
   name: string;
-  head?: boolean;
 }
 
-export const Brew: SpecificResource<BrewConfig> = {
-  name: "brew",
+export const Volta: SpecificResource<VoltaConfig> = {
+  name: "volta",
 
   get: ({ name }) => {
-    return `BREW ${name}`;
+    return `VOLTA ${name}`;
   },
 
   test: async function ({ name }, verbose) {
     if (await isExecutableCommand(name)) {
       if (verbose) {
-        log.warning(`Program '${name}' is already installed`);
+        log.warning(`Tool '${name}' is already installed`);
       }
       return true;
     } else {
@@ -27,23 +26,18 @@ export const Brew: SpecificResource<BrewConfig> = {
     }
   },
 
-  set: async ({ ensure = "present", name, head = false }, verbose) => {
-    const brew = "brew";
-    if (!(await isExecutableCommand(brew))) {
+  set: async ({ ensure = "present", name }, verbose) => {
+    if (!(await isExecutableCommand(name))) {
       log.error(
-        `'${brew}' is needed and is probably not an executable on this system`,
+        `'${name}' is needed and is probably not an executable on this system`,
       );
       deno.exit(1);
     }
     if (ensure === "present") {
-      const brewCommand = [brew, "install", `${name}`];
-      if (head) {
-        brewCommand.push("--HEAD");
-      }
-      const { success } = await command(brewCommand);
+      const { success } = await command([name, "--version"]);
       if (success) {
         if (verbose) {
-          log.info(`Program '${name}' installed`);
+          log.info(`Tool '${name}' installed`);
         }
       }
     } else {
