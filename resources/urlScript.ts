@@ -14,9 +14,14 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
   name: "urlScript",
 
   get: ({ name, url, params }) => {
-    return `URL SCRIPT '${name} from '${url}' with params '${params.join(
-      " "
-    )}'`;
+    if (!params) {
+      return `URL SCRIPT '${name} from '${url}'`;
+    }
+    return `URL SCRIPT '${name} from '${url}' with params '${
+      params.join(
+        " ",
+      )
+    }'`;
   },
 
   test: async function ({ name }, verbose) {
