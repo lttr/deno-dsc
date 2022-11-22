@@ -8,6 +8,7 @@ export interface UrlScriptConfig extends Config {
   name: string;
   url: string;
   params?: string[];
+  postInstall?: string;
 }
 
 export const UrlScript: SpecificResource<UrlScriptConfig> = {
@@ -35,7 +36,10 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
     }
   },
 
-  set: async ({ ensure = "present", name, url, params }, verbose) => {
+  set: async (
+    { ensure = "present", name, url, params = [], postInstall },
+    verbose,
+  ) => {
     if (ensure === "present") {
       try {
         const { success: downloaded, output: script } = await command([
@@ -51,6 +55,23 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
           if (success) {
             if (verbose) {
               log.info(`Program ${name} was installed`);
+            }
+          }
+
+          if (postInstall) {
+            const { success: postSuccess } = await command([
+              "bash",
+              "-c",
+              postInstall,
+            ]);
+            if (postSuccess) {
+              if (verbose) {
+                log.info(`Post install script for '${name}' was applied`);
+              }
+            } else {
+              log.error(
+                `Error occured during post install script for '${name}'`,
+              );
             }
           }
         } else {

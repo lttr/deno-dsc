@@ -17,7 +17,7 @@ export const InlineScript: SpecificResource<InlineScriptConfig> = {
   },
 
   test: async function ({ name, testScript }, verbose) {
-    const { success } = await command(["sh", "-c", testScript]);
+    const { success } = await command(["bash", "-c", testScript]);
     if (success) {
       if (verbose) {
         log.warning(`Inline script '${name}' has been already applied`);
