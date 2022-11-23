@@ -51,7 +51,10 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
           url,
         ]);
         if (downloaded) {
-          const { success } = await command(["bash", "-c", script, ...params]);
+          const { success } = await command(
+            ["bash", "-s", "--", ...params],
+            script,
+          );
           if (success) {
             if (verbose) {
               log.info(`Program ${name} was installed`);
