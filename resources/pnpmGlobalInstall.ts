@@ -6,6 +6,7 @@ import { SpecificResource } from "../resource.ts";
 
 export interface PnpmGlobalInstallConfig extends Config {
   name: string;
+  executable?: string;
 }
 
 export const PnpmGlobalInstall: SpecificResource<PnpmGlobalInstallConfig> = {
@@ -15,8 +16,8 @@ export const PnpmGlobalInstall: SpecificResource<PnpmGlobalInstallConfig> = {
     return `PNPM_GLOBAL_INSTALL ${name}`;
   },
 
-  test: async function ({ name }, verbose) {
-    if (await isExecutableCommand(name)) {
+  test: async function ({ name, executable }, verbose) {
+    if (await isExecutableCommand(executable ?? name)) {
       if (verbose) {
         log.warning(`Package '${name}' is already installed`);
       }
