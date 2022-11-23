@@ -28,7 +28,11 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
       commandLine = ["gsettings", "--schemadir", schemadir, "get", schema, key];
     }
     const { output } = await command(commandLine);
-    let normalizedValue = output.replace(/^'/, "").replace(/'$/, "");
+    let normalizedValue = output
+      .replace(/^'/, "")
+      .replace(/'$/, "")
+      .replace("uint32", "")
+      .trim();
     if (typeof value === "number") {
       let parsedNumber;
       try {
