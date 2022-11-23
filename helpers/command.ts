@@ -19,6 +19,7 @@ export async function command(
   if (stdin) {
     const writer = process.stdin?.writable.getWriter();
     await writer?.write(new TextEncoder().encode(stdin));
+    process.stdin?.close();
   }
   const { success, code } = await process.status();
   const stdout = await process.output();
