@@ -8,6 +8,7 @@ export interface GnomeSettingsConfig extends Config {
   schema: string;
   key: string;
   value: string | number | boolean;
+  schemadir?: string;
 }
 
 export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
@@ -17,12 +18,16 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
     return `GNOME SETTINGS ${config.schema} ${config.key} ${config.value}`;
   },
 
-  test: async function ({ schema, key, value }, verbose) {
+  test: async function ({ schema, key, value, schemadir }, verbose) {
     if (!(await isExecutableCommand("gsettings"))) {
       log.error(`'gsettings' is probably not an executable on this system`);
       deno.exit(1);
     }
-    const { output } = await command(["gsettings", "get", schema, key]);
+    let commandLine = ["gsettings", "get", schema, key];
+    if (schemadir) {
+      commandLine = ["gsettings", "--schemadir", schemadir, "get", schema, key];
+    }
+    const { output } = await command(commandLine);
     let normalizedValue = output.replace(/^'/, "").replace(/'$/, "");
     if (typeof value === "number") {
       let parsedNumber;
@@ -60,15 +65,30 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
     }
   },
 
-  set: async ({ ensure = "present", schema, key, value }, verbose) => {
+  set: async (
+    { ensure = "present", schema, key, value, schemadir },
+    verbose,
+  ) => {
     if (ensure === "present") {
-      const { success } = await command([
+      let commandLine = [
         "gsettings",
         "set",
         schema,
         key,
         value.toString(),
-      ]);
+      ];
+      if (schemadir) {
+        commandLine = [
+          "gsettings",
+          "--schemadir",
+          schemadir,
+          "set",
+          schema,
+          key,
+          value.toString(),
+        ];
+      }
+      const { success } = await command(commandLine);
       if (success) {
         if (verbose) {
           log.info(`Gnome settings '${schema} ${key}' was set to '${value}'`);
