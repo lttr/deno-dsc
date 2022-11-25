@@ -7,22 +7,14 @@ import { SpecificResource } from "../resource.ts";
 export interface UrlScriptConfig extends Config {
   name: string;
   url: string;
-  params?: string[];
   postInstall?: string;
 }
 
 export const UrlScript: SpecificResource<UrlScriptConfig> = {
   name: "urlScript",
 
-  get: ({ name, url, params }) => {
-    if (!params) {
-      return `URL SCRIPT '${name} from '${url}'`;
-    }
-    return `URL SCRIPT '${name} from '${url}' with params '${
-      params.join(
-        " ",
-      )
-    }'`;
+  get: ({ name, url }) => {
+    return `URL SCRIPT '${name} from '${url}'`;
   },
 
   test: async function ({ name }, verbose) {
@@ -37,7 +29,7 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
   },
 
   set: async (
-    { ensure = "present", name, url, params = [], postInstall },
+    { ensure = "present", name, url, postInstall },
     verbose,
   ) => {
     if (ensure === "present") {
@@ -52,7 +44,7 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
         ]);
         if (downloaded) {
           const { success } = await command(
-            ["bash", "-s", "--", ...params],
+            ["bash", "-s"],
             script,
           );
           if (success) {
