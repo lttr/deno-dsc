@@ -52,7 +52,7 @@ export type ResourceNames = keyof ResourceConfigurationMap;
 export type ResourceConfigurations =
   ResourceConfigurationMap[keyof ResourceConfigurationMap];
 
-const resources: Resource[] = [];
+export const resources: Resource[] = [];
 
 export function registerResource(resource: Resource): void {
   resources.push(resource);

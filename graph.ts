@@ -2,10 +2,17 @@ import { Config, WithDependencies } from "./configuration.ts";
 import { depGraph } from "./dep-graph/dep-graph.ts";
 import { lookupResource } from "./resource.ts";
 
-export function showDepGraph(configurationSet: Config[]): void {
+export interface GraphOptions {
+  filter?: string;
+}
+
+export function showDepGraph(
+  configurationSet: Config[],
+  graphOptions: GraphOptions,
+): void {
   const root = createRootNode();
   const unwrappedConfiguration = unwrapConfig(configurationSet, root);
-  depGraph(unwrappedConfiguration);
+  depGraph(unwrappedConfiguration, graphOptions);
 }
 
 export function unwrapConfig(

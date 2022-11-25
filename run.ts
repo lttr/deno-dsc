@@ -10,13 +10,14 @@ import {
 export interface RunOptions {
   verbose?: boolean;
   dryRun?: boolean;
+  filter?: string;
 }
 
 export async function runConfigurationSet(
   configurationSet: Config[],
   options: RunOptions = {},
 ): Promise<void> {
-  const { verbose = false, dryRun = false } = options;
+  const { verbose = false, dryRun = false, filter } = options;
   const givenConfigsCount = configurationSet.length;
   let testsCounter = 0;
   let setsCounter = 0;
@@ -24,12 +25,15 @@ export async function runConfigurationSet(
     if (config.dependsOn != null) {
       // TODO what is this branch for?
     }
+    // Skip this action if a filter contains something else
+    if (filter && filter !== config.resource?.name) {
+      return;
+    }
     const result = await config.resource?.test(config, verbose);
     testsCounter += 1;
     if (dryRun) {
-      log.info(
-        `${result ? "Do not" : "Do"} run '${config.resource?.get(config)}'`,
-      );
+      const description = config.resource?.get(config);
+      log.info(`${result ? "Would not" : "Would"} run '${description}'`);
     } else {
       if (!result) {
         log.info(`Starting '${config.resource?.get(config)}'`);

@@ -1,21 +1,29 @@
 import { Config } from "../configuration.ts";
 import { deno, digraph, open, toDot } from "../deps.ts";
+import { GraphOptions } from "../graph.ts";
 import { htmlPage } from "./html-page.ts";
 
-export function depGraph(config: Config[]): void {
+export function depGraph(config: Config[], { filter }: GraphOptions): void {
   const G = digraph("Execution tree", { rankdir: "LR" }, (g) => {
     for (const node of config) {
       if (node.resource) {
         let description = node.resource.get(node);
         // HACK: replace colon in description (the rest of the string was stripped otherwise)
         description = description.replace(":", "<colon>");
-        if (description.length > 200) {
-          description = `${description.slice(0, 200)}...`;
+        if (description.length > 100) {
+          description = `${description.slice(0, 100)}...`;
+        }
+        let color = "darkgreen";
+        if (isAbsent(node)) {
+          color = "brown";
+        }
+        if (filter === node.resource.name) {
+          color = "red";
         }
         g.node(description, {
           fontname: "Arial",
           fontsize: "12",
-          color: isAbsent(node) ? "brown" : "darkgreen",
+          color,
         });
         const dependency = node.dependsOn?.resource?.get(node.dependsOn);
         if (dependency) {

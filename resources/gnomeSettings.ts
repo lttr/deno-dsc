@@ -15,7 +15,11 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
   name: "gnomeSettings",
 
   get: (config) => {
-    return `GNOME SETTINGS ${config.schema} ${config.key} ${config.value}`;
+    let reducedValue = config.value;
+    if (typeof config.value === "string" && config.value.length > 30) {
+      reducedValue = "...long string...";
+    }
+    return `GNOME SETTINGS ${config.schema} ${config.key} ${reducedValue}`;
   },
 
   test: async function ({ schema, key, value, schemadir }, verbose) {
