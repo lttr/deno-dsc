@@ -1,8 +1,12 @@
 import { deno } from "../deps.ts";
 
+interface CommandOptions {
+  stdin?: string;
+  suppressError?: boolean;
+}
 export async function command(
   params: string[],
-  stdin?: string,
+  { stdin, suppressError }: CommandOptions = {},
 ): Promise<{
   success: boolean;
   code: number;
@@ -14,6 +18,9 @@ export async function command(
   };
   if (stdin) {
     runOptions.stdin = "piped";
+  }
+  if (suppressError) {
+    runOptions.stderr = "null";
   }
   const process = deno.run(runOptions);
   if (stdin) {

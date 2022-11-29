@@ -45,7 +45,7 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
         if (downloaded) {
           const { success } = await command(
             ["bash", "-s"],
-            script,
+            { stdin: script },
           );
           if (success) {
             if (verbose) {

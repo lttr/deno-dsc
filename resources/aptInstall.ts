@@ -15,7 +15,9 @@ export const AptInstall: SpecificResource<AptInstallConfig> = {
   },
 
   test: async function ({ packageName }) {
-    const { success } = await command(["dpkg-query", "-W", packageName]);
+    const { success } = await command(["dpkg-query", "-W", packageName], {
+      suppressError: true,
+    });
     return success;
   },
 
