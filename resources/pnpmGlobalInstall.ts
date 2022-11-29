@@ -17,7 +17,7 @@ export const PnpmGlobalInstall: SpecificResource<PnpmGlobalInstallConfig> = {
   },
 
   test: async function ({ name, executable }, verbose) {
-    if (await isExecutableCommand(executable ?? name)) {
+    if (await isExecutableCommand(executable || name)) {
       if (verbose) {
         log.warning(`Package '${name}' is already installed`);
       }

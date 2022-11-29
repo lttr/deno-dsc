@@ -6,6 +6,7 @@ import { SpecificResource } from "../resource.ts";
 
 export interface BrewConfig extends Config {
   name: string;
+  executable?: string;
   head?: boolean;
 }
 
@@ -16,8 +17,8 @@ export const Brew: SpecificResource<BrewConfig> = {
     return `BREW ${name}`;
   },
 
-  test: async function ({ name }, verbose) {
-    if (await isExecutableCommand(name)) {
+  test: async function ({ name, executable }, verbose) {
+    if (await isExecutableCommand(executable || name)) {
       if (verbose) {
         log.warning(`Program '${name}' is already installed`);
       }
