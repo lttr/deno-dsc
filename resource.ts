@@ -10,6 +10,7 @@ import {
   DebianPackage,
   DebianPackageConfig,
 } from "./resources/debianPackage.ts";
+import { Flatpak, FlatpakConfig } from "./resources/flatpak.ts";
 import { Directory, DirectoryConfig } from "./resources/directory.ts";
 import { GitClone, GitCloneConfig } from "./resources/gitClone.ts";
 import {
@@ -73,6 +74,7 @@ export type Resources =
   | SpecificResource<AptUpdateConfig>
   | SpecificResource<BrewConfig>
   | SpecificResource<DebianPackageConfig>
+  | SpecificResource<FlatpakConfig>
   | SpecificResource<DirectoryConfig>
   | SpecificResource<GitCloneConfig>
   | SpecificResource<GnomeSettingsConfig>
@@ -91,6 +93,7 @@ export interface ResourceConfigurationMap {
   aptUpdate: AptUpdateConfig;
   brew: BrewConfig;
   debianPackage: DebianPackageConfig;
+  flatpak: FlatpakConfig;
   directory: DirectoryConfig;
   gitClone: GitCloneConfig;
   gnomeSettings: GnomeSettingsConfig;
@@ -109,6 +112,7 @@ registerResource(AptInstall);
 registerResource(AptUpdate);
 registerResource(Brew);
 registerResource(DebianPackage);
+registerResource(Flatpak);
 registerResource(Directory);
 registerResource(GitClone);
 registerResource(GnomeSettings);
