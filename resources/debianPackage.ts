@@ -1,5 +1,5 @@
 import type { Config } from "../configuration.ts";
-import { deno, download, log, path } from "../deps.ts";
+import { deno, download, log } from "../deps.ts";
 import { command } from "../helpers/command.ts";
 import { isExecutableCommand } from "../helpers/isExecutable.ts";
 import type { SpecificResource } from "../resource.ts";
@@ -31,13 +31,12 @@ export const DebianPackage: SpecificResource<DebianPackageConfig> = {
 
   set: async ({ ensure = "present", name, url }, verbose) => {
     if (ensure === "present") {
-      const fileName = path.basename(new URL(url).pathname);
-      const filePath = path.join(TEMP_DIR_LINUX, fileName);
+      let filePath = "";
       try {
-        await download(url, {
-          file: fileName,
+        const downloaded = await download(url, {
           dir: TEMP_DIR_LINUX,
         });
+        filePath = downloaded.fullPath;
         const { success } = await command([
           "sudo",
           "dpkg",
