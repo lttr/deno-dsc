@@ -14,6 +14,7 @@
     "open": "https://deno.land/x/open@v0.0.5/index.ts"
   },
   "tasks": {
+    "verify": "deno check && deno lint && deno task test",
     "test": "deno test --allow-read --allow-write tests/",
     "example-depgraph": "deno run --allow-read --allow-write --allow-run examples/example-dep-graph.ts",
     "example-print": "deno run --allow-read --allow-write --allow-run examples/example-print.ts",

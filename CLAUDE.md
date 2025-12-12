@@ -6,11 +6,14 @@ code in this repository.
 ## Commands
 
 ```bash
-deno task test                    # Run tests
+deno task verify                  # Run check, lint, and tests (run after every change)
+deno task test                    # Run tests only
 deno test --allow-read --allow-write tests/directory.test.ts  # Run single test
 deno task example-depgraph        # Visualize dependency graph
 deno task example-dryrun          # Dry run example configuration
 ```
+
+**Important:** Always run `deno task verify` after making changes.
 
 ## Architecture
 
