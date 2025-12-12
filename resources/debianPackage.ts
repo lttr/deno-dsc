@@ -31,7 +31,7 @@ export const DebianPackage: SpecificResource<DebianPackageConfig> = {
 
   set: async ({ ensure = "present", name, url }, verbose) => {
     if (ensure === "present") {
-      const fileName = `${name}.deb`;
+      const fileName = path.basename(new URL(url).pathname);
       const filePath = path.join(TEMP_DIR_LINUX, fileName);
       try {
         await download(url, {
