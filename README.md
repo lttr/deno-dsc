@@ -31,7 +31,7 @@ export interface LoginShellConfig extends Config {
   shell: "zsh";
 }
 
-export const LoginShell: Resource<LoginShellConfig> = {
+export const LoginShell: SpecificResource<LoginShellConfig> = {
   name: "loginShell",
   get: (config) => {
     //...
@@ -48,7 +48,7 @@ export const LoginShell: Resource<LoginShellConfig> = {
 Add to list of types of resources
 
 ```typescript
-type MyResources = Resources | Resource<LoginShellConfig>;
+type MyResources = Resources | SpecificResource<LoginShellConfig>;
 ```
 
 Registr the new resource

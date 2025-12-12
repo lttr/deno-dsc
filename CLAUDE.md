@@ -6,6 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ```bash
 deno task test                    # Run tests
+deno test --allow-read --allow-write tests/directory.test.ts  # Run single test
 deno task example-depgraph        # Visualize dependency graph
 deno task example-dryrun          # Dry run example configuration
 ```
@@ -41,3 +42,13 @@ const configs: Config[] = [
 ```
 
 Use `dependsOn` for explicit ordering. All configs without dependencies run after a synthetic root node.
+
+### Available Resources
+
+`aptInstall`, `aptUpdate`, `brew`, `debianPackage`, `directory`, `flatpak`, `gitClone`, `gnomeSettings`, `gnomeShellExtension`, `inlineScript`, `loginShell`, `pnpmGlobalInstall`, `symlink`, `urlScript`, `webInstall`
+
+### Key Files
+
+- `mod.ts` - Public API entry point
+- `resource.ts` - Resource type definitions and registry
+- `resources/` - Individual resource implementations
