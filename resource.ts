@@ -42,12 +42,8 @@ export type SpecificResource<T extends Config> = {
   test: (configuration: T, verbose: boolean) => Promise<boolean> | boolean;
 };
 
-export interface Resource {
-  name: string;
-  get: (configuration: ResourceConfigurations) => string;
-  set: (configuration: ResourceConfigurations, verbose: boolean) => Promise<void>;
-  test: (configuration: ResourceConfigurations, verbose: boolean) => Promise<boolean> | boolean;
-}
+// deno-lint-ignore no-explicit-any
+export type Resource = SpecificResource<any>;
 
 export type ResourceNames = keyof ResourceConfigurationMap;
 export type ResourceConfigurations =
