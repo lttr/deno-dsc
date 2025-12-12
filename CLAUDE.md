@@ -1,6 +1,7 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with
+code in this repository.
 
 ## Commands
 
@@ -13,12 +14,15 @@ deno task example-dryrun          # Dry run example configuration
 
 ## Architecture
 
-Desired state configuration library for Deno - idempotent system configuration via dependency graph execution.
+Desired state configuration library for Deno - idempotent system configuration
+via dependency graph execution.
 
 ### Core Flow
 
-1. **Configuration** (`configuration.ts`) - Config objects specify resources and dependencies
-2. **Resources** (`resource.ts`, `resources/`) - Each resource implements `get`, `test`, `set`:
+1. **Configuration** (`configuration.ts`) - Config objects specify resources and
+   dependencies
+2. **Resources** (`resource.ts`, `resources/`) - Each resource implements `get`,
+   `test`, `set`:
    - `get(config)` → description string
    - `test(config)` → boolean (already in desired state?)
    - `set(config)` → apply the configuration
@@ -27,7 +31,8 @@ Desired state configuration library for Deno - idempotent system configuration v
 
 ### Adding a Resource
 
-1. Create `resources/myResource.ts` with `MyResourceConfig` interface and `MyResource: SpecificResource<MyResourceConfig>`
+1. Create `resources/myResource.ts` with `MyResourceConfig` interface and
+   `MyResource: SpecificResource<MyResourceConfig>`
 2. Add config type to `ResourceConfigurationMap` in `resource.ts`
 3. Add to `Resources` union type
 4. Call `registerResource(MyResource)`
@@ -41,11 +46,14 @@ const configs: Config[] = [
 ];
 ```
 
-Use `dependsOn` for explicit ordering. All configs without dependencies run after a synthetic root node.
+Use `dependsOn` for explicit ordering. All configs without dependencies run
+after a synthetic root node.
 
 ### Available Resources
 
-`aptInstall`, `aptUpdate`, `brew`, `debianPackage`, `directory`, `flatpak`, `gitClone`, `gnomeSettings`, `gnomeShellExtension`, `inlineScript`, `loginShell`, `pnpmGlobalInstall`, `symlink`, `urlScript`, `webInstall`
+`aptInstall`, `aptUpdate`, `brew`, `debianPackage`, `directory`, `flatpak`,
+`gitClone`, `gnomeSettings`, `gnomeShellExtension`, `inlineScript`,
+`loginShell`, `pnpmGlobalInstall`, `symlink`, `urlScript`, `webInstall`
 
 ### Key Files
 

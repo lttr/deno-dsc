@@ -1,11 +1,5 @@
 import { Config } from "../configuration.ts";
-import {
-  deno,
-  ensureSymlink,
-  fs,
-  log,
-  path,
-} from "../deps.ts";
+import { deno, ensureSymlink, fs, log, path } from "../deps.ts";
 import { SpecificResource } from "../resource.ts";
 
 export interface SymlinkConfig extends Config {
