@@ -1,14 +1,14 @@
 // std
-import * as fs from "https://deno.land/std@0.65.0/fs/mod.ts";
-import * as log from "https://deno.land/std@0.65.0/log/mod.ts";
-import * as path from "https://deno.land/std@0.65.0/path/mod.ts";
+import * as fs from "jsr:@std/fs@1";
+import * as log from "jsr:@std/log@0";
+import * as path from "jsr:@std/path@1";
 
-await log.setup({
+log.setup({
   handlers: {
-    console: new log.handlers.ConsoleHandler("DEBUG"),
-    file: new log.handlers.FileHandler("DEBUG", {
+    console: new log.ConsoleHandler("DEBUG"),
+    file: new log.FileHandler("DEBUG", {
       filename: `/tmp/deno-dsc-${new Date().getTime()}.log`,
-      formatter: "{levelName} {msg}",
+      formatter: (record) => `${record.levelName} ${record.msg}`,
     }),
   },
 });
@@ -17,12 +17,11 @@ export { fs };
 export { log };
 export { path };
 
-export { ensureSymlink } from "https://deno.land/std@0.65.0/fs/ensure_symlink.ts";
-export { getFileInfoType } from "https://deno.land/std@0.65.0/fs/_util.ts";
-export { ensureDir } from "https://deno.land/std@0.65.0/fs/ensure_dir.ts";
-export { exists as dirExists } from "https://deno.land/std@0.65.0/fs/exists.ts";
+export { ensureSymlink } from "jsr:@std/fs@1/ensure-symlink";
+export { ensureDir } from "jsr:@std/fs@1/ensure-dir";
+export { exists as dirExists } from "jsr:@std/fs@1/exists";
 
-export { assert } from "https://deno.land/std@0.65.0/testing/asserts.ts";
+export { assert } from "jsr:@std/assert@1";
 
 // buildin
 export const deno = Deno;

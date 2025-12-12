@@ -36,7 +36,7 @@ export const AptInstall: SpecificResource<AptInstallConfig> = {
         }
       }
     } else {
-      log.warning(`Removing is not implemented`);
+      log.warn(`Removing is not implemented`);
     }
   },
 };

@@ -17,7 +17,7 @@ export const LoginShell: SpecificResource<LoginShellConfig> = {
   test: async function ({ shell }, verbose) {
     if (deno.env.get("ZSH_NAME") || deno.env.get("ZSH_DIR")) {
       if (verbose) {
-        log.warning(`Login shell is already set to '${shell}'`);
+        log.warn(`Login shell is already set to '${shell}'`);
       }
       return await Promise.resolve(true);
     } else {
@@ -36,7 +36,7 @@ export const LoginShell: SpecificResource<LoginShellConfig> = {
         log.error(`Shell '${shell}' was not set as a login shell`);
       }
     } else {
-      log.warning(
+      log.warn(
         `It does not make sense to ensure '${shell}' shell is absent`,
       );
     }

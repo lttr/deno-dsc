@@ -12,25 +12,27 @@ export async function command(
   code: number;
   output: string;
 }> {
-  const runOptions: any = {
-    cmd: params,
+  const [cmd, ...args] = params;
+  const commandOptions: Deno.CommandOptions = {
+    args,
     stdout: "piped",
+    stderr: suppressError ? "null" : undefined,
+    stdin: stdin ? "piped" : undefined,
   };
+
+  const command = new deno.Command(cmd, commandOptions);
+
   if (stdin) {
-    runOptions.stdin = "piped";
+    const process = command.spawn();
+    const writer = process.stdin.getWriter();
+    await writer.write(new TextEncoder().encode(stdin));
+    await writer.close();
+    const { success, code, stdout } = await process.output();
+    const output = new TextDecoder().decode(stdout).trim();
+    return { success, code, output };
   }
-  if (suppressError) {
-    runOptions.stderr = "null";
-  }
-  const process = deno.run(runOptions);
-  if (stdin) {
-    const writer = process.stdin?.writable.getWriter();
-    await writer?.write(new TextEncoder().encode(stdin));
-    process.stdin?.close();
-  }
-  const { success, code } = await process.status();
-  const stdout = await process.output();
+
+  const { success, code, stdout } = await command.output();
   const output = new TextDecoder().decode(stdout).trim();
-  process.close();
   return { success, code, output };
 }

@@ -20,7 +20,7 @@ export const InlineScript: SpecificResource<InlineScriptConfig> = {
     const { success } = await command(["sh", "-c", testScript]);
     if (success) {
       if (verbose) {
-        log.warning(`Inline script '${name}' has been already applied`);
+        log.warn(`Inline script '${name}' has been already applied`);
       }
       return true;
     } else {
@@ -39,7 +39,7 @@ export const InlineScript: SpecificResource<InlineScriptConfig> = {
         log.error(`Error occured during inline script '${name}' execution`);
       }
     } else {
-      log.warning(`Inline script does not make sence to be absent`);
+      log.warn(`Inline script does not make sence to be absent`);
     }
   },
 };

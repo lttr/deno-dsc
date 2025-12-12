@@ -19,7 +19,7 @@ export const WebInstall: SpecificResource<WebInstallConfig> = {
   test: async function ({ name }, verbose) {
     if (await isExecutableCommand(name)) {
       if (verbose) {
-        log.warning(`Tool '${name}' is already installed`);
+        log.warn(`Tool '${name}' is already installed`);
       }
       return true;
     } else {
@@ -43,7 +43,7 @@ export const WebInstall: SpecificResource<WebInstallConfig> = {
         }
       }
     } else {
-      log.warning(`Removing is not implemented`);
+      log.warn(`Removing is not implemented`);
     }
   },
 };

@@ -52,7 +52,7 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
       }
       if (value === parsedNumber) {
         if (verbose) {
-          log.warning(
+          log.warn(
             `Gnome settings '${schema} ${key}' is already set to '${value}'`,
           );
         }
@@ -63,7 +63,7 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
     }
     if (normalizedValue === value.toString()) {
       if (verbose) {
-        log.warning(
+        log.warn(
           `Gnome settings '${schema} ${key}' is already set to '${value}'`,
         );
       }
@@ -107,7 +107,7 @@ export const GnomeSettings: SpecificResource<GnomeSettingsConfig> = {
         );
       }
     } else {
-      log.warning(`It does not make sense to ensure gnome settings is absent`);
+      log.warn(`It does not make sense to ensure gnome settings is absent`);
     }
   },
 };

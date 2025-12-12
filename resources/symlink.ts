@@ -3,7 +3,6 @@ import {
   deno,
   ensureSymlink,
   fs,
-  getFileInfoType,
   log,
   path,
 } from "../deps.ts";
@@ -25,12 +24,12 @@ export const Symlink: SpecificResource<SymlinkConfig> = {
     const exists = await symlinkExists(src, dest);
     if (ensure === "present") {
       if (exists && verbose) {
-        log.warning(`Symlink '${dest} -> ${path.resolve(src)}' already exists`);
+        log.warn(`Symlink '${dest} -> ${path.resolve(src)}' already exists`);
       }
       return exists;
     } else {
       if (!exists && verbose) {
-        log.warning(
+        log.warn(
           `Symlink '${dest} -> ${path.resolve(src)}' does not exists`,
         );
       }
@@ -69,8 +68,7 @@ export async function symlinkExists(
 ): Promise<boolean> {
   if (await fs.exists(dest)) {
     const destStatInfo = await deno.lstat(dest);
-    const destFilePathType = getFileInfoType(destStatInfo);
-    if (destFilePathType === "symlink") {
+    if (destStatInfo.isSymlink) {
       const symlinkDestination = await deno.readLink(dest);
       return path.resolve(src) === symlinkDestination;
     }

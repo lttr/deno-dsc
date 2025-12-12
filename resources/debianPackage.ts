@@ -21,7 +21,7 @@ export const DebianPackage: SpecificResource<DebianPackageConfig> = {
   test: async function ({ name }, verbose) {
     if (await isExecutableCommand(name)) {
       if (verbose) {
-        log.warning(`Program '${name}' is already installed on this machine`);
+        log.warn(`Program '${name}' is already installed on this machine`);
       }
       return true;
     } else {
@@ -61,7 +61,7 @@ export const DebianPackage: SpecificResource<DebianPackageConfig> = {
         }
       }
     } else {
-      log.warning(`Removing is not implemented`);
+      log.warn(`Removing is not implemented`);
     }
   },
 };

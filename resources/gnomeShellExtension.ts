@@ -35,7 +35,7 @@ export const GnomeShellExtension: SpecificResource<GnomeShellExtensionConfig> =
       ]);
       if (output.includes(fullName)) {
         if (verbose) {
-          log.warning(`Gnome extension '${fullName}' is already enabled`);
+          log.warn(`Gnome extension '${fullName}' is already enabled`);
         }
         return true;
       } else {
@@ -57,7 +57,7 @@ export const GnomeShellExtension: SpecificResource<GnomeShellExtensionConfig> =
           log.info(`Gnome extension '${fullName}' installed`);
         }
       } else {
-        log.warning(`Removing is not implemented`);
+        log.warn(`Removing is not implemented`);
       }
     },
   };

@@ -29,7 +29,7 @@ export const AppForMimeType: SpecificResource<AppForMimeTypeConfig> = {
     ]);
     if (output === app) {
       if (verbose) {
-        log.warning(`Mime type '${mimeType}' is already handled by '${app}'`);
+        log.warn(`Mime type '${mimeType}' is already handled by '${app}'`);
       }
       return true;
     } else {
@@ -50,7 +50,7 @@ export const AppForMimeType: SpecificResource<AppForMimeTypeConfig> = {
         );
       }
     } else {
-      log.warning(`Absent mime type handler is not implemented`);
+      log.warn(`Absent mime type handler is not implemented`);
     }
   },
 };

@@ -44,7 +44,7 @@ export const Flatpak: SpecificResource<FlatpakConfig> = {
         }
       }
     } else {
-      log.warning(`Removing is not implemented`);
+      log.warn(`Removing is not implemented`);
     }
   },
 };

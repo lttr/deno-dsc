@@ -26,7 +26,7 @@ export const GnomeShellExtensionInstaller: SpecificResource<
   test: async function (verbose) {
     if (await isExecutableCommand(EXE_NAME)) {
       if (verbose) {
-        log.warning(
+        log.warn(
           `Program '${EXE_NAME}' is already installed on this machine`,
         );
       }
@@ -58,7 +58,7 @@ export const GnomeShellExtensionInstaller: SpecificResource<
         log.error(`Program ${EXE_NAME} failed to install`);
       }
     } else {
-      log.warning(`Removing is not implemented`);
+      log.warn(`Removing is not implemented`);
     }
   },
 };

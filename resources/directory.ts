@@ -17,12 +17,12 @@ export const Directory: SpecificResource<DirectoryConfig> = {
     const exists = await dirExists(path);
     if (ensure === "present") {
       if (exists && verbose) {
-        log.warning(`Directory '${path}' already exists`);
+        log.warn(`Directory '${path}' already exists`);
       }
       return exists;
     } else {
       if (!exists && verbose) {
-        log.warning(`Directory '${path}' does not exists`);
+        log.warn(`Directory '${path}' does not exists`);
       }
       return !exists;
     }

@@ -19,7 +19,7 @@ export const PnpmGlobalInstall: SpecificResource<PnpmGlobalInstallConfig> = {
   test: async function ({ name, executable }, verbose) {
     if (await isExecutableCommand(executable || name)) {
       if (verbose) {
-        log.warning(`Package '${name}' is already installed`);
+        log.warn(`Package '${name}' is already installed`);
       }
       return true;
     } else {
@@ -42,7 +42,7 @@ export const PnpmGlobalInstall: SpecificResource<PnpmGlobalInstallConfig> = {
         }
       }
     } else {
-      log.warning(`Removing is not implemented`);
+      log.warn(`Removing is not implemented`);
     }
   },
 };

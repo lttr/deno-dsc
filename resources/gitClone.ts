@@ -19,7 +19,7 @@ export const GitClone: SpecificResource<GitCloneConfig> = {
   test: async function ({ target }, verbose) {
     if (await dirExists(target)) {
       if (verbose) {
-        log.warning(`Directory '${target}' already exists`);
+        log.warn(`Directory '${target}' already exists`);
       }
       return true;
     } else {
@@ -49,7 +49,7 @@ export const GitClone: SpecificResource<GitCloneConfig> = {
         log.error(`Failed to git clone from ${url} into ${target}`);
       }
     } else {
-      log.warning(`Removing is not implemented`);
+      log.warn(`Removing is not implemented`);
     }
   },
 };

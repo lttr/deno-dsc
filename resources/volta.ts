@@ -18,7 +18,7 @@ export const Volta: SpecificResource<VoltaConfig> = {
   test: async function ({ name }, verbose) {
     if (await isExecutableCommand(name)) {
       if (verbose) {
-        log.warning(`Tool '${name}' is already installed`);
+        log.warn(`Tool '${name}' is already installed`);
       }
       return true;
     } else {
@@ -41,7 +41,7 @@ export const Volta: SpecificResource<VoltaConfig> = {
         }
       }
     } else {
-      log.warning(`Removing is not implemented`);
+      log.warn(`Removing is not implemented`);
     }
   },
 };

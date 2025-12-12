@@ -20,7 +20,7 @@ export const Brew: SpecificResource<BrewConfig> = {
   test: async function ({ name, executable }, verbose) {
     if (await isExecutableCommand(executable || name)) {
       if (verbose) {
-        log.warning(`Program '${name}' is already installed`);
+        log.warn(`Program '${name}' is already installed`);
       }
       return true;
     } else {
@@ -48,7 +48,7 @@ export const Brew: SpecificResource<BrewConfig> = {
         }
       }
     } else {
-      log.warning(`Removing is not implemented`);
+      log.warn(`Removing is not implemented`);
     }
   },
 };
