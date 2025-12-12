@@ -44,9 +44,9 @@ export type SpecificResource<T extends Config> = {
 
 export interface Resource {
   name: string;
-  get: (configuration: any) => string;
-  set: (configuration: any, verbose: boolean) => Promise<void>;
-  test: (configuration: any, verbose: boolean) => Promise<boolean> | boolean;
+  get: (configuration: ResourceConfigurations) => string;
+  set: (configuration: ResourceConfigurations, verbose: boolean) => Promise<void>;
+  test: (configuration: ResourceConfigurations, verbose: boolean) => Promise<boolean> | boolean;
 }
 
 export type ResourceNames = keyof ResourceConfigurationMap;

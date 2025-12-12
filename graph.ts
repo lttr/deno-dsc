@@ -36,7 +36,7 @@ export function unwrapConfig(
 
 function unwrapItem(wrappedConfiguration: Config) {
   const key = Object.keys(wrappedConfiguration)[0] as keyof Config;
-  const unwrappedConfiguration = wrappedConfiguration[key] as any;
+  const unwrappedConfiguration = wrappedConfiguration[key] as Config;
   return { key, unwrappedConfiguration };
 }
 
