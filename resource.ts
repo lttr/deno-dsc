@@ -1,39 +1,39 @@
-import { Config } from "./configuration.ts";
+import type { Config } from "./configuration.ts";
 import {
   AppForMimeType,
-  AppForMimeTypeConfig,
+  type AppForMimeTypeConfig,
 } from "./resources/appForMimeType.ts";
-import { AptInstall, AptInstallConfig } from "./resources/aptInstall.ts";
-import { AptUpdate, AptUpdateConfig } from "./resources/aptUpdate.ts";
-import { Brew, BrewConfig } from "./resources/brew.ts";
+import { AptInstall, type AptInstallConfig } from "./resources/aptInstall.ts";
+import { AptUpdate, type AptUpdateConfig } from "./resources/aptUpdate.ts";
+import { Brew, type BrewConfig } from "./resources/brew.ts";
 import {
   DebianPackage,
-  DebianPackageConfig,
+  type DebianPackageConfig,
 } from "./resources/debianPackage.ts";
-import { Flatpak, FlatpakConfig } from "./resources/flatpak.ts";
-import { Directory, DirectoryConfig } from "./resources/directory.ts";
-import { GitClone, GitCloneConfig } from "./resources/gitClone.ts";
+import { Flatpak, type FlatpakConfig } from "./resources/flatpak.ts";
+import { Directory, type DirectoryConfig } from "./resources/directory.ts";
+import { GitClone, type GitCloneConfig } from "./resources/gitClone.ts";
 import {
   GnomeSettings,
-  GnomeSettingsConfig,
+  type GnomeSettingsConfig,
 } from "./resources/gnomeSettings.ts";
 import {
   GnomeShellExtension,
-  GnomeShellExtensionConfig,
+  type GnomeShellExtensionConfig,
 } from "./resources/gnomeShellExtension.ts";
 import {
   GnomeShellExtensionInstaller,
-  GnomeShellExtensionInstallerConfig,
+  type GnomeShellExtensionInstallerConfig,
 } from "./resources/gnomeShellExtensionInstaller.ts";
-import { InlineScript, InlineScriptConfig } from "./resources/inlineScript.ts";
-import { LoginShell, LoginShellConfig } from "./resources/loginShell.ts";
+import { InlineScript, type InlineScriptConfig } from "./resources/inlineScript.ts";
+import { LoginShell, type LoginShellConfig } from "./resources/loginShell.ts";
 import {
   PnpmGlobalInstall,
-  PnpmGlobalInstallConfig,
+  type PnpmGlobalInstallConfig,
 } from "./resources/pnpmGlobalInstall.ts";
-import { Symlink, SymlinkConfig } from "./resources/symlink.ts";
-import { UrlScript, UrlScriptConfig } from "./resources/urlScript.ts";
-import { WebInstall, WebInstallConfig } from "./resources/webInstall.ts";
+import { Symlink, type SymlinkConfig } from "./resources/symlink.ts";
+import { UrlScript, type UrlScriptConfig } from "./resources/urlScript.ts";
+import { WebInstall, type WebInstallConfig } from "./resources/webInstall.ts";
 
 export type SpecificResource<T extends Config> = {
   name: string;

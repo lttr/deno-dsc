@@ -1,7 +1,7 @@
-import { Config } from "../configuration.ts";
+import type { Config } from "../configuration.ts";
 import { log } from "../deps.ts";
 import { command } from "../helpers/command.ts";
-import { SpecificResource } from "../resource.ts";
+import type { SpecificResource } from "../resource.ts";
 
 export interface AptInstallConfig extends Config {
   packageName: string;

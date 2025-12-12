@@ -1,6 +1,6 @@
-import { Config } from "../configuration.ts";
+import type { Config } from "../configuration.ts";
 import { deno, digraph, open, toDot } from "../deps.ts";
-import { GraphOptions } from "../graph.ts";
+import type { GraphOptions } from "../graph.ts";
 import { htmlPage } from "./html-page.ts";
 
 export function depGraph(config: Config[], { filter }: GraphOptions): void {
@@ -22,7 +22,7 @@ export function depGraph(config: Config[], { filter }: GraphOptions): void {
         }
         g.node(description, {
           fontname: "Arial",
-          fontsize: "12",
+          fontsize: 12,
           color,
         });
         const dependency = node.dependsOn?.resource?.get(node.dependsOn);

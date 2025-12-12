@@ -1,5 +1,5 @@
-import { Config } from "../mod.ts";
-import { CustomResourceConfig } from "./example-custom-resource.ts";
+import type { Config } from "../mod.ts";
+import type { CustomResourceConfig } from "./example-custom-resource.ts";
 
 const optDirectory: Config = {
   directory: {

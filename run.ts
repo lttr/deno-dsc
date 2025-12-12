@@ -1,4 +1,4 @@
-import { Config, WithDependencies } from "./configuration.ts";
+import type { Config, WithDependencies } from "./configuration.ts";
 import { log } from "./deps.ts";
 import {
   breadthFirst,

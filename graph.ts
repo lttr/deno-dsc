@@ -1,4 +1,4 @@
-import { Config, WithDependencies } from "./configuration.ts";
+import type { Config, WithDependencies } from "./configuration.ts";
 import { depGraph } from "./dep-graph/dep-graph.ts";
 import { lookupResource } from "./resource.ts";
 

@@ -1,4 +1,4 @@
-import { Config } from "./configuration.ts";
+import type { Config } from "./configuration.ts";
 import { jsonTree } from "./deps.ts";
 import {
   constructDependenciesTree,

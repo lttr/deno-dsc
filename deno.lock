@@ -9,7 +9,9 @@
     "jsr:@std/io@~0.225.2": "0.225.2",
     "jsr:@std/log@0": "0.224.14",
     "jsr:@std/path@1": "1.1.3",
-    "jsr:@std/path@^1.1.3": "1.1.3"
+    "jsr:@std/path@^1.1.3": "1.1.3",
+    "npm:ts-graphviz@*": "3.0.6",
+    "npm:ts-graphviz@^3.0.6": "3.0.6"
   },
   "jsr": {
     "@std/assert@1.0.16": {
@@ -46,6 +48,39 @@
       "integrity": "b015962d82a5e6daea980c32b82d2c40142149639968549c649031a230b1afb3",
       "dependencies": [
         "jsr:@std/internal"
+      ]
+    }
+  },
+  "npm": {
+    "@ts-graphviz/adapter@3.0.5": {
+      "integrity": "sha512-l6U+jizdkgnwq8Gb4I/Azgr/TGM452ovx2SLxUU/mGZNtrdOol4qi7Gn+d5hP3weBKkUNV9C7j1Xawg4w1DkCw==",
+      "dependencies": [
+        "@ts-graphviz/common"
+      ]
+    },
+    "@ts-graphviz/ast@3.0.5": {
+      "integrity": "sha512-gwrhTWspMU0qIP8V3yLnwUcnV+pJuPRTp5RAzpqYlKcD7NIsMtZfCzN2fzg8SpkJFC5S/9Ajlv7zJy37LhGH6A==",
+      "dependencies": [
+        "@ts-graphviz/common"
+      ]
+    },
+    "@ts-graphviz/common@3.0.4": {
+      "integrity": "sha512-lwyjx7FAXLCh4/8bHWHRr45yj1GycoGz747XxF3rbJ2SDDpCC12De0cT06v2EuHqAwpq629+A9VDft5G/wRAIw=="
+    },
+    "@ts-graphviz/core@3.0.6": {
+      "integrity": "sha512-5g/Tj1xoUgOnB0yhTe4uHR6WTm5zZSm6o79DihTHENOT5/dli70cAI28ousc8hB46N4PKEPqDMR5C/W/jCvtow==",
+      "dependencies": [
+        "@ts-graphviz/ast",
+        "@ts-graphviz/common"
+      ]
+    },
+    "ts-graphviz@3.0.6": {
+      "integrity": "sha512-NZAbgrRP4HPTgD/w032eQM2P1bEYv+peW+fiw4CreEKwZvqtWm2B7gi4Kon5fzRuP+VP8m7hpIBAWHT5rqEK6w==",
+      "dependencies": [
+        "@ts-graphviz/adapter",
+        "@ts-graphviz/ast",
+        "@ts-graphviz/common",
+        "@ts-graphviz/core"
       ]
     }
   },

@@ -1,4 +1,4 @@
-import { Config, Resource } from "../mod.ts";
+import type { Config, Resource } from "../mod.ts";
 
 export const CustomResource: Resource = {
   name: "customResource",
