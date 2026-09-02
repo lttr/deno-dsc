@@ -30,9 +30,13 @@ export const AptUpdate: SpecificResource<AptUpdateConfig> = {
     return false;
   },
 
-  set: async (verbose) => {
+  set: async (_, verbose) => {
     try {
-      await command(["sudo", "apt-get", "update"]);
+      const { success, code } = await command(["sudo", "apt-get", "update"]);
+      if (!success) {
+        log.error(`'apt-get update' exited with status ${code}`);
+        return;
+      }
       if (verbose) {
         log.info("Apt updated");
       }
