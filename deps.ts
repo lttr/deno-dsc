@@ -19,7 +19,7 @@ export { path };
 
 export { ensureSymlink } from "@std/fs/ensure-symlink";
 export { ensureDir } from "@std/fs/ensure-dir";
-export { exists as dirExists } from "@std/fs/exists";
+export { exists, exists as dirExists } from "@std/fs/exists";
 
 export { assert } from "@std/assert";
 

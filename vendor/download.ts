@@ -45,9 +45,16 @@ export async function download(
   }
 
   if (typeof destination === "undefined" || typeof destination.file === "undefined") {
-    file = finalUrl.substring(finalUrl.lastIndexOf("/") + 1);
+    // Path only: redirects to signed CDN URLs carry query strings long enough
+    // to exceed the 255-byte filename limit.
+    const pathname = new URL(finalUrl).pathname.replace(/\/$/, "");
+    file = decodeURIComponent(pathname.substring(pathname.lastIndexOf("/") + 1));
   } else {
     file = destination.file;
+  }
+
+  if (!file) {
+    throw new Error(`Unable to derive a file name from '${finalUrl}'`);
   }
 
   if (typeof destination !== "undefined" && typeof destination.mode !== "undefined") {

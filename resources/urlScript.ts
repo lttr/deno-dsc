@@ -8,6 +8,9 @@ export interface UrlScriptConfig extends Config {
   name: string;
   url: string;
   postInstall?: string;
+  /** Binary to test for when it differs from `name` (e.g. vite-plus installs
+   * `vp`); otherwise the script re-runs on every pass. */
+  executable?: string;
 }
 
 export const UrlScript: SpecificResource<UrlScriptConfig> = {
@@ -17,8 +20,8 @@ export const UrlScript: SpecificResource<UrlScriptConfig> = {
     return `URL SCRIPT '${name} from '${url}'`;
   },
 
-  test: async function ({ name }, verbose) {
-    if (await isExecutableCommand(name)) {
+  test: async function ({ name, executable }, verbose) {
+    if (await isExecutableCommand(executable ?? name)) {
       if (verbose) {
         log.warn(`Program '${name}' is already installed on this machine`);
       }

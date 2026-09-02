@@ -7,6 +7,9 @@ import type { SpecificResource } from "../resource.ts";
 export interface DebianPackageConfig extends Config {
   name: string;
   url: string;
+  /** Binary to test for when it differs from `name` (e.g. Obsidian's CLI
+   * helper is also called `obsidian`, so `name` alone gives false positives). */
+  executable?: string;
 }
 
 const TEMP_DIR_LINUX = "/tmp";
@@ -18,8 +21,8 @@ export const DebianPackage: SpecificResource<DebianPackageConfig> = {
     return `DEBIAN PACKAGE '${name} from '${url}'`;
   },
 
-  test: async function ({ name }, verbose) {
-    if (await isExecutableCommand(name)) {
+  test: async function ({ name, executable }, verbose) {
+    if (await isExecutableCommand(executable ?? name)) {
       if (verbose) {
         log.warn(`Program '${name}' is already installed on this machine`);
       }
@@ -37,14 +40,16 @@ export const DebianPackage: SpecificResource<DebianPackageConfig> = {
           dir: TEMP_DIR_LINUX,
         });
         filePath = downloaded.fullPath;
+        // apt-get, not dpkg: dpkg can't resolve the .deb's dependencies.
         const { success } = await command([
           "sudo",
-          "dpkg",
-          "--install",
+          "apt-get",
+          "install",
+          "-y",
           filePath,
         ]);
         if (!success) {
-          throw new Error(`dpkg was unable to install from path '${filePath}'`);
+          throw new Error(`apt was unable to install from path '${filePath}'`);
         }
         if (verbose) {
           log.info(`Program ${name} has been installed`);
@@ -53,10 +58,13 @@ export const DebianPackage: SpecificResource<DebianPackageConfig> = {
         log.error(err);
         log.error(`Program ${name} failed to install`);
       } finally {
-        try {
-          await deno.remove(filePath);
-        } catch (err) {
-          log.error(err);
+        // filePath is empty when the download itself failed.
+        if (filePath) {
+          try {
+            await deno.remove(filePath);
+          } catch (err) {
+            log.error(err);
+          }
         }
       }
     } else {
